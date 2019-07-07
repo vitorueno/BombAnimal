@@ -6,7 +6,7 @@ class Player(arcade.Sprite):
     def __init__(self,arquivo,escala,velocidade=0,x=0,y=0,bombas=1,forca=1,vidas=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE):
         super().__init__(arquivo,escala,center_x=x,center_y=y)
         self.num_bombas = 5
-        self.forca = 3
+        self.forca = 2
         self.velocidade = velocidade
         self.vidas = vidas
         self.cima = False
