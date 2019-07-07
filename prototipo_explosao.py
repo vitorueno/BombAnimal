@@ -14,7 +14,7 @@ SPRITE_SCALING = 0.69
 ORIGINAL_SPRITE_SIZE = 900
 SPRITE_SIZE = ORIGINAL_SPRITE_SIZE * SPRITE_SCALING
 MOVEMENT_SPEED = 5
-NUM_DESTRUTIVOS = 20
+NUM_DESTRUTIVOS = 10
 EXPLOSION_TEXTURE_COUNT = 7
 
 
@@ -32,9 +32,11 @@ class MyGame(arcade.Window):
         #inicializar listas
         self.wall_list = None
         self.destrutiveis = None
+        self.indestrutiveis = None
         self.player_list = None
         self.bomb_list = None
         self.explosao_list = None
+        self.power_up_list = None
 
         #inicializar sprites dos players
         self.player1_sprite = None
@@ -48,6 +50,7 @@ class MyGame(arcade.Window):
         self.player_list = arcade.SpriteList()
         self.bomb_list = arcade.SpriteList()
         self.explosao_list = arcade.SpriteList()
+        self.power_up_list = arcade.SpriteList()
 
         #sprite player 1
         self.player1_sprite = Player("img/character1.png", SPRITE_SCALING_PLAYER,MOVEMENT_SPEED,x=50,y=50,vidas=2)
@@ -57,18 +60,18 @@ class MyGame(arcade.Window):
         self.player2_sprite = Player("img/panda1.png",SPRITE_SCALING_PLAYER,MOVEMENT_SPEED,x=SCREEN_WIDTH-49,y=SCREEN_HEIGHT-12,
         c=arcade.key.UP,b=arcade.key.DOWN,d=arcade.key.RIGHT,e=arcade.key.LEFT,bomb=arcade.key.ENTER,vidas=2)
         self.player_list.append(self.player2_sprite)
-
-        #criar blocos indestrutiveis (fixos)
+        
+        #criar blocos
         for y in range(40,780,130):
             for x in range(120,720,115):
-                bloco = Indestrutivel("img/bloco2.PNG",SPRITE_SCALING,x,y)
+                bloco = Indestrutivel("img/bloco70.png",SPRITE_SCALING,x,y)
                 self.wall_list.append(bloco)
 
         #criar blocos destrutiveis (aleatórios)
 
         destrutivo = NUM_DESTRUTIVOS
         while destrutivo > 0:
-            destrutivel = Destrutivel("img/box.png", SPRITE_SCALING)
+            destrutivel = Destrutivel("img/box70.png", SPRITE_SCALING)
             posicionado = False
             while not posicionado:
                 destrutivel.center_x = random.randrange(SCREEN_WIDTH)
@@ -82,7 +85,7 @@ class MyGame(arcade.Window):
                     posicionado = True
             destrutivo -= 1
             self.wall_list.append(destrutivel)
-
+        
         self.textura_explosao_central = []
         self.textura_explosao_trilho = []
         self.textura_explosao_fim = []
@@ -93,7 +96,7 @@ class MyGame(arcade.Window):
             self.textura_explosao_central.append(arcade.load_texture(central))
             self.textura_explosao_trilho.append(arcade.load_texture(trilho))
             self.textura_explosao_fim.append(arcade.load_texture(fim))
-
+        
 
         self.texturas_totais_explosao = [self.textura_explosao_central,
                                         self.textura_explosao_trilho,
@@ -110,6 +113,7 @@ class MyGame(arcade.Window):
         self.wall_list.draw()
         self.bomb_list.draw()
         self.explosao_list.draw()
+        self.power_up_list.draw()
 
     def update(self, delta_time):
         #atualizar fisica do jogo (checagens de colisão)
@@ -138,17 +142,22 @@ class MyGame(arcade.Window):
                 if indestrutivel:
                     explosao.kill()
                 else:
-                    arcade.sound.play_sound(parede_atingida.som)
-                    parede_atingida.kill()
-
+                    power_up = parede_atingida.destruir_bloco()
+                    if power_up is not None:
+                        self.power_up_list.append(power_up)
 
             for player_atingido in hits_players:
                 player_atingido.vidas -= 1
                 if player_atingido.vidas == 0:
                     arcade.sound.play_sound(player_atingido.som)
                     player_atingido.kill()
-            
-                
+
+        if self.power_up_list is not None:
+            for power_up in self.power_up_list:
+                power_up.update()
+                coletas = arcade.check_for_collision_with_list(power_up,self.player_list)
+                for coleta in coletas:
+                    power_up.coletar_powerUp(coleta)
     
     def on_key_press(self, key, key_modifiers):
         #verificar tecla pressionada
