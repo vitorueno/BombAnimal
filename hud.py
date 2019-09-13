@@ -48,11 +48,11 @@ class Hud():
     def draw_hud(self):
         #retangulo
         arcade.draw_rectangle_filled(self.center_x,self.center_y,self.hud_width,
-                                     self.hud_height,arcade.color.CADET_GREY)
+                                     self.hud_height,(22,120,111,232))
 
         #risco
         arcade.draw_rectangle_filled(self.center_x,self.center_y-25,self.hud_width,
-                                     3,arcade.color.BLACK)
+                                     2,(0,0,0,170))
 
         #personagens
 
