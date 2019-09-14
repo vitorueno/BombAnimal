@@ -2,76 +2,18 @@ import arcade
 
 #botão base
 class Botao:
-    def __init__(self,center_x, center_y,width, height, text, font_size=18,font_face="Arial",
-                face_color=arcade.color.LIGHT_GRAY,highlight_color=arcade.color.WHITE,
-                shadow_color=arcade.color.GRAY,button_height=2,frame=False,cor_texto=arcade.color.WHITE,acao_botao = 0):
-
+    def __init__(self,imagem,center_x,center_y,width,height,escala=1,acao_botao = 0):
+        self.imagem = imagem
         self.center_x = center_x
         self.center_y = center_y
-        self.width = width
         self.height = height
-        self.text = text
-        self.font_size = font_size
-        self.font_face = font_face
-        self.pressed = False
-        self.face_color = face_color
-        self.highlight_color = highlight_color
-        self.shadow_color = shadow_color
-        self.button_height = button_height
-        self.frame = frame
-        self.cor_texto = cor_texto
+        self.width = width
         self.acao_botao = acao_botao
+        self.pressed = False
+        self.sprite_botao = arcade.Sprite(imagem,escala,center_x=center_x,center_y=center_y)
 
     def draw(self):
-        """ desenhar_botão """
-
-        #retangulo do botão
-        arcade.draw_rectangle_filled(self.center_x, self.center_y, self.width,
-                                     self.height, self.face_color)
-
-        if not self.pressed:
-            color = self.shadow_color
-
-        else:
-            color = self.highlight_color
-
-        if self.frame:
-            #linha horizontal de baixo
-            arcade.draw_line(self.center_x - self.width / 2, self.center_y - self.height / 2,
-                            self.center_x + self.width / 2, self.center_y - self.height / 2,
-                            color, self.button_height)
-
-            #linha vertical da direita
-            arcade.draw_line(self.center_x + self.width / 2, self.center_y - self.height / 2,
-                            self.center_x + self.width / 2, self.center_y + self.height / 2,
-                            color, self.button_height)
-
-        if not self.pressed:
-            color = self.highlight_color
-        else:
-            color = self.shadow_color
-
-        if self.frame:
-            #linha horizontal do topo
-            arcade.draw_line(self.center_x - self.width / 2, self.center_y + self.height / 2,
-                            self.center_x + self.width / 2, self.center_y + self.height / 2,
-                            color, self.button_height)
-
-            #linha vertical da esquerda
-            arcade.draw_line(self.center_x - self.width / 2, self.center_y - self.height / 2,
-                            self.center_x - self.width / 2, self.center_y + self.height / 2,
-                            color, self.button_height)
-
-        x = self.center_x
-        y = self.center_y
-        if not self.pressed:
-            x -= self.button_height
-            y += self.button_height
-
-        arcade.draw_text(self.text, x, y,
-                         self.cor_texto, font_size=self.font_size,
-                         width=self.width, align="center",
-                         anchor_x="center", anchor_y="center")
+        self.sprite_botao.draw()
 
     #se for pressionado o estado do botão é pressionado
     def on_press(self):

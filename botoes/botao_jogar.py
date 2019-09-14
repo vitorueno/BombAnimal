@@ -1,9 +1,7 @@
 import arcade
 from .botao import Botao
 
-#botao de play(jogar)
+#botao de play
 class Botao_jogar(Botao):
     def __init__(self,center_x,center_y):
-        super().__init__(center_x,center_y,120,30,"Jogar",29,"Arial",face_color=(0,0,0,0),cor_texto=(0,240,255),acao_botao=1)
-
-        
+        super().__init__("img/botoes/botao_jogar.png",center_x=center_x,center_y=center_y,width=115,height=36,escala=1,acao_botao=1)

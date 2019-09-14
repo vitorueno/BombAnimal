@@ -1,6 +1,7 @@
 import arcade
 from .botao import Botao
 
+#botão jogar novamente
 class Botao_jogar_novamente(Botao):
-    def __init__(self, center_x,center_y):
-        super().__init__(center_x,center_y,150,50,"Jogar novamente",14,"Arial",face_color=(0,0,0,0),cor_texto=(0,240,255),acao_botao=2)
+    def __init__(self,center_x,center_y):
+        super().__init__("img/botoes/botao_jogar_novamente.png",center_x=center_x,center_y=center_y,width=188,height=25,escala=1,acao_botao=2)

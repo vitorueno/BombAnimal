@@ -1,5 +1,5 @@
 import arcade
-from botoes.botao_voltar_menu_pos import Botao_voltar_menu_pos
+from botoes.botao_voltar_menu import Botao_voltar_menu
 from botoes.botao_jogar_novamente import Botao_jogar_novamente
 from botoes.botao_voltar_selecao import Botao_voltar_selecao
 
@@ -15,9 +15,9 @@ class Pos_partida():
 
         #criar botoes e jogar numa lista de botoes
         
-        self.botao_menu = Botao_voltar_menu_pos(250, self.center_y - 150)
-        self.botao_selecao = Botao_voltar_selecao(self.center_x,self.center_y - 150)
-        self.botao_novamente = Botao_jogar_novamente(550, self.center_y - 150)
+        self.botao_menu = Botao_voltar_menu(self.center_x, self.center_y - 100)
+        self.botao_selecao = Botao_voltar_selecao(self.center_x,self.center_y - 130)
+        self.botao_novamente = Botao_jogar_novamente(self.center_x, self.center_y - 160)
         self.lista_botoes = [self.botao_menu,self.botao_selecao,self.botao_novamente]
     
     def draw_pos_partida(self):
@@ -40,24 +40,22 @@ class Pos_partida():
         
         #se for o p1
         if self.p1.ganhou is not None and self.p1.ganhou:
-            texto_ganhador = "Vitória do jogador 1!!!"
-            arcade.draw_text(texto_ganhador,self.center_x,self.center_y+150,arcade.color.RED,30,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
-            player_ganhador = arcade.Sprite(f"img/animais/{self.p1.tipo}1.png",scale=0.170,center_x=self.center_x, center_y= self.center_y)
+            texto_ganhador = arcade.Sprite("img/texto_vitoriap1.png",center_x=self.center_x,center_y=self.center_y+150)
+            texto_ganhador.draw()
+            player_ganhador = arcade.Sprite(f"img/animais/{self.p1.tipo}1.png",scale=0.170,center_x=self.center_x, center_y= self.center_y+15)
             player_ganhador.draw()
 
         #se for o p2
         elif self.p2.ganhou is not None and self.p2.ganhou:
-            texto_ganhador = "Vitória do jogador 2!!!"
-            arcade.draw_text(texto_ganhador,self.center_x,self.center_y+150,arcade.color.GREEN,30,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
-            player_ganhador = arcade.Sprite(f"img/animais/{self.p2.tipo}1.png",scale=0.170,center_x=self.center_x, center_y= self.center_y)
+            texto_ganhador = arcade.Sprite("img/texto_vitoriap2.png",center_x=self.center_x,center_y=self.center_y+150)
+            texto_ganhador.draw()
+            player_ganhador = arcade.Sprite(f"img/animais/{self.p2.tipo}1.png",scale=0.170,center_x=self.center_x, center_y= self.center_y+15)
             player_ganhador.draw()
 
         #se não for nenhum dos dois (?)
         else:
-            player_empate1 = arcade.Sprite(f"img/animais/{self.p1.tipo}1.png",scale=0.170,center_x=self.center_x-100, center_y= self.center_y)
-            player_empate2 = arcade.Sprite(f"img/animais/{self.p2.tipo}1.png",scale=0.170,center_x=self.center_x+100, center_y= self.center_y)
+            player_empate1 = arcade.Sprite(f"img/animais/{self.p1.tipo}1.png",scale=0.170,center_x=self.center_x-100, center_y= self.center_y+15)
+            player_empate2 = arcade.Sprite(f"img/animais/{self.p2.tipo}1.png",scale=0.170,center_x=self.center_x+100, center_y= self.center_y+15)
             player_empate1.draw()
             player_empate2.draw()
 

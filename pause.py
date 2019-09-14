@@ -1,8 +1,8 @@
 import arcade
 from botoes.botao_continuar import Botao_continuar
 from botoes.botao_voltar_menu import Botao_voltar_menu
-from botoes.botao_sair_pause import Botao_sair_pause
-from botoes.botao_configuracao import Botao_configuracao
+from botoes.botao_sair import Botao_sair
+from botoes.botao_opcoes import Botao_opcoes
 
 class Tela_pause():
     def __init__(self,screen_width,screen_height):
@@ -12,9 +12,9 @@ class Tela_pause():
         self.center_y = screen_height/2
     
         self.botao_continuar = Botao_continuar(self.center_x,self.center_y + 60)
-        self.botao_configuracao = Botao_configuracao(self.center_x,self.center_y - 10)
+        self.botao_configuracao = Botao_opcoes(self.center_x,self.center_y - 10)
         self.botao_voltar_menu = Botao_voltar_menu(self.center_x,self.center_y-80)
-        self.botao_sair = Botao_sair_pause(self.center_x,self.center_y-150)
+        self.botao_sair = Botao_sair(self.center_x,self.center_y-150)
         
         self.lista_botoes = [self.botao_continuar,self.botao_configuracao,self.botao_voltar_menu,self.botao_sair]
 
