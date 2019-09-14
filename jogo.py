@@ -227,8 +227,17 @@ class Jogo(arcade.Window):
                                 self.power_up_list.append(power_up)
 
                     for player_atingido in hits_players:
-                        player_atingido.vidas -= 1
-                        if player_atingido.vidas == 0:
+                        estado = player_atingido.verificar_sobrevivencia(delta_time)
+                        print(estado)
+                        if estado is not None:
+                            if player_atingido == self.player1_sprite:
+                                self.player2_sprite.ganhou = True
+                            else:
+                                self.player1_sprite.ganhou = True
+                            self.estado_atual = POS_PARTIDA
+
+                        #player_atingido.vidas -= 1
+                        '''if player_atingido.vidas == 0:
                             arcade.sound.play_sound(player_atingido.som)
                             if player_atingido == self.player1_sprite:
                                 self.player1_sprite.ganhou = False
@@ -237,7 +246,7 @@ class Jogo(arcade.Window):
                                 self.player1_sprite.ganhou = True
                                 self.player2_sprite.ganhou = False
                             player_atingido.kill()
-                            self.estado_atual = POS_PARTIDA
+                            self.estado_atual = POS_PARTIDA'''
 
 
                 #checar por colisões com powerups

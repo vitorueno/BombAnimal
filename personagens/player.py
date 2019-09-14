@@ -2,12 +2,14 @@ import arcade
 from bombas.bomba import Bomba
 
 class Player(arcade.Sprite):
-    def __init__(self,arquivo,escala=0.06,velocidade=5,x=0,y=0,bombas=1,forca=1,vidas=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,ganhou=None):
+    def __init__(self,arquivo,escala=0.06,velocidade=5,x=0,y=0,bombas=1,forca=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,ganhou=None,limite_imortal=3.0):
         super().__init__(arquivo,scale=escala,center_x=x,center_y=y)
         self.num_bombas = bombas
         self.forca = 1
         self.velocidade = velocidade
-        self.vidas = vidas
+        self.imortal = False
+        self.tempo_imortal = 0.0
+        self.limite_imortal = limite_imortal
         self.cima = False
         self.baixo = False
         self.esquerda = False
@@ -61,7 +63,10 @@ class Player(arcade.Sprite):
             self.esquerda = False
 
     def plantar_bomba(self):
-        bomba = Bomba(0.5, x=self.center_x, y=self.center_y, forca=self.forca, player=self, limite=3)
+
+        pos_x = ((self.center_x // 32) * 32) + 16 
+        pos_y = ((self.center_y // 32) * 32) + 16
+        bomba = Bomba(0.5, x= pos_x, y= pos_y, forca=self.forca, player=self, limite=3)
         self.num_bombas -= 1
         return bomba
         
@@ -77,3 +82,31 @@ class Player(arcade.Sprite):
     
     def set_num_bombas(self,num_bombas):
         self.num_bombas = num_bombas
+
+    def verificar_sobrevivencia(self,delta_time):
+        perdeu = None
+        if self.capacete:
+            self.imortal = True
+            self.capacete = False
+        else:
+            #print(self.imortal)
+            if not self.imortal:
+                arcade.sound.play_sound(self.som)
+                self.ganhou = False
+                perdeu = self.ganhou
+                self.kill()
+            else:
+                #self.atualizar_imortal(delta_time),
+                if self.tempo_imortal >= self.limite_imortal:
+                    self.tempo_imortal = 0.0
+                    self.imortal = False
+                else:
+                    self.tempo_imortal += delta_time
+        return perdeu
+
+    def atualizar_imortal(self,delta_time):
+        self.tempo_imortal += delta_time
+        if self.tempo_imortal >= self.limite_imortal:
+            self.tempo_imortal = 0.0
+            self.imortal = False
+    
