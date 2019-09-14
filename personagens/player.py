@@ -2,7 +2,7 @@ import arcade
 from bombas.bomba import Bomba
 
 class Player(arcade.Sprite):
-    def __init__(self,arquivo,escala=0.06,velocidade=5,x=0,y=0,bombas=1,forca=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,ganhou=None,limite_imortal=3.0):
+    def __init__(self,arquivo,escala=0.10,velocidade=5,x=0,y=0,bombas=1,forca=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,ganhou=None,limite_imortal=1):
         super().__init__(arquivo,scale=escala,center_x=x,center_y=y)
         self.num_bombas = bombas
         self.forca = 1
@@ -63,10 +63,9 @@ class Player(arcade.Sprite):
             self.esquerda = False
 
     def plantar_bomba(self):
-
         pos_x = ((self.center_x // 32) * 32) + 16 
         pos_y = ((self.center_y // 32) * 32) + 16
-        bomba = Bomba(0.5, x= pos_x, y= pos_y, forca=self.forca, player=self, limite=3)
+        bomba = Bomba(0.5, x= pos_x, y= pos_y, forca=self.forca, player=self, limite=2.75)
         self.num_bombas -= 1
         return bomba
         
@@ -93,8 +92,9 @@ class Player(arcade.Sprite):
             if not self.imortal:
                 arcade.sound.play_sound(self.som)
                 self.ganhou = False
-                perdeu = self.ganhou
+                perdeu = True
                 self.kill()
+                del(self)
             else:
                 #self.atualizar_imortal(delta_time),
                 if self.tempo_imortal >= self.limite_imortal:

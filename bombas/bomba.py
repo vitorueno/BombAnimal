@@ -64,7 +64,9 @@ class Bomba(arcade.Sprite):
                 explosao.append(Explosao_fim(lista[2],x, y - tam, angulo=270)) 
                 #esquerda
                 explosao.append(Explosao_fim(lista[2],x - tam, y, angulo=180)) 
-            
+
+                for explo in explosao:
+                    explo.pos_central = (self.center_x,self.center_y)
 
         return explosao
 

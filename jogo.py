@@ -13,6 +13,7 @@ from menu import Menu
 from selecao import Selecao_personagem
 from pause import Tela_pause
 from pos_partida import Pos_partida
+from bombas.explosao import Explosao_central
 
 SCREEN_WIDTH = HUD_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -212,20 +213,64 @@ class Jogo(arcade.Window):
                         for pedaco_explosao in explodiu:
                             self.explosao_list.append(pedaco_explosao)
 
-                #checar colisão das explosões
+                #checar colisão das explosões com blocos
                 for explosao in self.explosao_list:
+
                     explosao.update(delta_time)
                     hits_paredes = arcade.check_for_collision_with_list(explosao,self.wall_list)
-                    hits_players = arcade.check_for_collision_with_list(explosao,self.player_list)
+                    
+
                     for parede_atingida in hits_paredes:
                         indestrutivel = isinstance(parede_atingida,Indestrutivel)
+                        #se a parede atingida for indestrutível, o pedaço de explosao que a atingiu deve ser excluído (bloqueado)
                         if indestrutivel:
-                            explosao.kill()
+                            #x e y da explosao bloqueada pelo bloco indestrutível
+                            x_bloqueado = explosao.center_x
+                            y_bloqueado = explosao.center_y
+
+                            #x e y da explosao central 
+                            x_central = explosao.pos_central[0]
+                            y_central = explosao.pos_central[1]
+
+                            #descobrir onde a explosao bloqueada está em relação à central
+                            caso_direita = x_bloqueado > x_central and y_bloqueado == y_central
+                            caso_cima = x_bloqueado == x_central and y_bloqueado > y_central
+                            caso_esquerda = x_bloqueado < x_central and y_bloqueado == y_central
+                            caso_baixo = x_bloqueado == x_central and y_bloqueado < y_central
+
+                            #de acordo com o caso exclui a explosao bloqueada e as subsequentes de sua linha
+                            if caso_direita:
+                                for explosao_indesejada in self.explosao_list:
+                                    if explosao_indesejada.center_x >= x_bloqueado and explosao_indesejada.center_y == y_bloqueado:
+                                        explosao_indesejada.kill()
+                                        del(explosao_indesejada)
+                            elif caso_cima:
+                                for explosao_indesejada in self.explosao_list:
+                                    if explosao_indesejada.center_x == x_bloqueado and explosao_indesejada.center_y >= y_bloqueado:
+                                        explosao_indesejada.kill()
+                                        del(explosao_indesejada)
+                            elif caso_esquerda:
+                                for explosao_indesejada in self.explosao_list:
+                                    if explosao_indesejada.center_x <= x_bloqueado and explosao_indesejada.center_y == y_bloqueado:
+                                        explosao_indesejada.kill()
+                                        del(explosao_indesejada)
+                            elif caso_baixo:
+                                for explosao_indesejada in self.explosao_list:
+                                    if explosao_indesejada.center_x == x_bloqueado and explosao_indesejada.center_y <= y_bloqueado:
+                                        explosao_indesejada.kill()
+                                        del(explosao_indesejada)
+
+                        #se for destrutível ativa o algoritmo de geração de power up que pode ou não ser gerado
                         else:
                             power_up = parede_atingida.destruir_bloco()
                             if power_up is not None:
                                 self.power_up_list.append(power_up)
 
+                #nesse ponto a lista de bombas foi atualizada, o que garante que as colisões com player vão ignorar as bombas bloqueadas
+
+                #checar colisão das explosões com players 
+                for explosao in self.explosao_list:
+                    hits_players = arcade.check_for_collision_with_list(explosao,self.player_list)
                     for player_atingido in hits_players:
                         estado = player_atingido.verificar_sobrevivencia(delta_time)
                         print(estado)
@@ -235,19 +280,6 @@ class Jogo(arcade.Window):
                             else:
                                 self.player1_sprite.ganhou = True
                             self.estado_atual = POS_PARTIDA
-
-                        #player_atingido.vidas -= 1
-                        '''if player_atingido.vidas == 0:
-                            arcade.sound.play_sound(player_atingido.som)
-                            if player_atingido == self.player1_sprite:
-                                self.player1_sprite.ganhou = False
-                                self.player2_sprite.ganhou = True
-                            elif player_atingido == self.player2_sprite:
-                                self.player1_sprite.ganhou = True
-                                self.player2_sprite.ganhou = False
-                            player_atingido.kill()
-                            self.estado_atual = POS_PARTIDA'''
-
 
                 #checar por colisões com powerups
                 if self.power_up_list is not None:
