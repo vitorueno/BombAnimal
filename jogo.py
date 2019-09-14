@@ -10,6 +10,7 @@ from blocos.indestrutivel import Indestrutivel
 from hud import Hud
 from mapa import Mapa
 from menu import Menu
+from selecao import Selecao_personagem
 
 SCREEN_WIDTH = HUD_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -42,8 +43,11 @@ class Jogo(arcade.Window):
         arcade.set_background_color(arcade.color.AMAZON)
 
         #interface
+        #carregar apenas na execução do jogo
         self.hud = None
         self.mapa = None
+        #carregar antes porque são importantes
+        self.selecao_personagem = Selecao_personagem(SCREEN_WIDTH,SCREEN_HEIGHT)
         self.menu = Menu(SCREEN_WIDTH,SCREEN_HEIGHT)
         self.estado_atual = MENU
 
@@ -120,34 +124,6 @@ class Jogo(arcade.Window):
                 self.wall_list.append(bloco)
             for bloco in temp_destrutiveis:
                 self.wall_list.append(bloco)
-            
-
-            #criar mapa 'manualmente'
-            '''
-            #criar blocos indestrutíveis (fixos)
-            for y in range(40,780,130):
-                for x in range(120,720,115):
-                    bloco = Indestrutivel("img/bloco70.png",SPRITE_SCALING,x,y)
-                    self.wall_list.append(bloco)
-
-            #criar blocos destrutiveis (aleatórios)
-            destrutivo = NUM_DESTRUTIVOS
-            while destrutivo > 0:
-                destrutivel = Destrutivel("img/box70.png", SPRITE_SCALING)
-                posicionado = False
-                while not posicionado:
-                    destrutivel.center_x = random.randrange(SCREEN_WIDTH)
-                    destrutivel.center_y = random.randrange(SCREEN_HEIGHT)
-                    destrutivel.manter_na_tela(SCREEN_WIDTH,SCREEN_HEIGHT)
-                    colisao_bloco = arcade.check_for_collision_with_list(destrutivel, self.wall_list)
-                    colisao_player = arcade.check_for_collision_with_list(destrutivel,self.player_list)
-                    distancia_p1 = arcade.get_distance_between_sprites(destrutivel,self.player1_sprite)
-                    distancia_p2 = arcade.get_distance_between_sprites(destrutivel,self.player2_sprite)
-                    if len(colisao_bloco) == 0 and len(colisao_player) == 0 and distancia_p1 > 55 and distancia_p2 > 55:
-                        posicionado = True
-                destrutivo -= 1
-                self.wall_list.append(destrutivel)
-            '''
 
             #carregar texturas para criar explosões
             self.textura_explosao_central = []
@@ -190,7 +166,7 @@ class Jogo(arcade.Window):
         if self.estado_atual == MENU:
             self.menu.draw_menu()
         elif self.estado_atual == SELECAO_PERSONAGEM:
-            pass
+            self.selecao_personagem.draw_selecao()
         elif self.estado_atual == PARTIDA:
             self.draw_game()
         elif self.estado_atual == PAUSE:
@@ -202,7 +178,7 @@ class Jogo(arcade.Window):
         if self.estado_atual == MENU:
             self.set_mouse_visible(True)
         elif self.estado_atual == SELECAO_PERSONAGEM: 
-            self.set_mouse_visible(False)
+            self.set_mouse_visible(True)
         elif self.estado_atual == PARTIDA:
             #hud
             self.hud.atualizar_tempo(delta_time)
@@ -259,9 +235,17 @@ class Jogo(arcade.Window):
 
         elif self.estado_atual == POS_PARTIDA:
             self.set_mouse_visible(True)
+        
+        elif self.estado_atual == SAIR:
+            self.close()
 
 
     def on_key_press(self, key, key_modifiers):
+        if self.estado_atual == SELECAO_PERSONAGEM:
+            self.selecao_personagem.on_key_press_p1(key,key_modifiers)
+        
+
+
         if self.estado_atual == PARTIDA:
             for player in self.player_list:
                 bomba_solicitada = player.on_key_press(key,key_modifiers)
@@ -286,14 +270,26 @@ class Jogo(arcade.Window):
         if self.estado_atual == MENU:
             self.menu.on_mouse_press_menu(x,y,button,key_modifiers)
 
+        if self.estado_atual == SELECAO_PERSONAGEM:
+            self.selecao_personagem.on_mouse_press_selecao(x,y,button,key_modifiers)
+            
+
     def on_mouse_release(self,x,y,button,key_modifiers):
         if self.estado_atual == MENU:
             resultado = self.menu.on_mouse_release_menu(x,y,button,key_modifiers)
             if resultado is not None:
                 self.estado_atual = resultado
-                if self.estado_atual == PARTIDA:
+
+        if self.estado_atual == SELECAO_PERSONAGEM:
+            resultado = self.selecao_personagem.on_mouse_release_selecao(x,y,button,key_modifiers)
+            if resultado is not None:
+                if type(resultado) == int:
+                    self.estado_atual = resultado
+                elif type(resultado) == tuple:
+                    self.estado_atual = resultado[0]
+                    self.tipo_p1 = resultado[1]
+                    self.tipo_p2 = resultado[2]
                     self.setup()
-                
 
 def main():
     """ Main method """

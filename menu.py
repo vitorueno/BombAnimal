@@ -45,25 +45,3 @@ class Menu():
             proxima_tela = botao.desclicar(x,y,button,key_modifiers)
             if proxima_tela is not None:
                 return proxima_tela
-
-    '''
-    def check_mouse_press(self,x,y,button,key_modifiers):
-        for botao in self.lista_botoes:
-            if x > botao.center_x + botao.width / 2 and button == arcade.key.NUM_LEFT:
-                continue
-            if x < botao.center_x - botao.width / 2 and button == arcade.key.NUM_LEFT:
-                continue
-            if y > botao.center_y + botao.height / 2 and button == arcade.key.NUM_LEFT:
-                continue
-            if y < botao.center_y - botao.height / 2 and button == arcade.key.NUM_LEFT:
-                continue
-            botao.on_press()
-    
-    def check_mouse_release(self,x, y, button, key_modifiers):
-        for botao in self.lista_botoes:
-            if botao.pressed:
-                acao = botao.on_release()
-                return acao
-            else:
-                return 0
-    '''
