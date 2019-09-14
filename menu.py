@@ -13,9 +13,9 @@ class Menu():
 
         #criar botoes e jogar numa lista de botoes
         self.lista_botoes = []
-        botao_jogar = Botao_jogar(self.center_x, self.center_y + 50)
-        botao_opcoes = Botao_opcoes(self.center_x, self.center_y)
-        botao_sair = Botao_sair(self.center_x,self.center_y-50)
+        botao_jogar = Botao_jogar(self.center_x, self.center_y + 60)
+        botao_opcoes = Botao_opcoes(self.center_x, self.center_y - 10)
+        botao_sair = Botao_sair(self.center_x,self.center_y- 80)
         self.lista_botoes.append(botao_jogar)
         self.lista_botoes.append(botao_opcoes)
         self.lista_botoes.append(botao_sair)

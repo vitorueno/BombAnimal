@@ -11,6 +11,7 @@ from hud import Hud
 from mapa import Mapa
 from menu import Menu
 from selecao import Selecao_personagem
+from pause import Tela_pause
 
 SCREEN_WIDTH = HUD_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -42,14 +43,20 @@ class Jogo(arcade.Window):
         super().__init__(width, height, title,resizable=False)
         arcade.set_background_color(arcade.color.AMAZON)
 
+        self.pausado = False
+
         #interface
         #carregar apenas na execução do jogo
         self.hud = None
         self.mapa = None
+        
+
         #carregar antes porque são importantes
         self.selecao_personagem = Selecao_personagem(SCREEN_WIDTH,SCREEN_HEIGHT)
         self.menu = Menu(SCREEN_WIDTH,SCREEN_HEIGHT)
+        self.tela_pause = Tela_pause(SCREEN_WIDTH,SCREEN_HEIGHT)
         self.estado_atual = MENU
+
 
         #fisica
         self.physics_engine = None
@@ -159,6 +166,9 @@ class Jogo(arcade.Window):
         #interface
         self.hud.draw_hud()
 
+        if self.pausado:
+            self.tela_pause.draw()
+
     def on_draw(self):
         #coisas que serão desenhadas na tela
         arcade.start_render()
@@ -169,8 +179,6 @@ class Jogo(arcade.Window):
             self.selecao_personagem.draw_selecao()
         elif self.estado_atual == PARTIDA:
             self.draw_game()
-        elif self.estado_atual == PAUSE:
-            pass
         elif self.estado_atual == POS_PARTIDA:
             pass
     
@@ -180,56 +188,55 @@ class Jogo(arcade.Window):
         elif self.estado_atual == SELECAO_PERSONAGEM: 
             self.set_mouse_visible(True)
         elif self.estado_atual == PARTIDA:
-            #hud
-            self.hud.atualizar_tempo(delta_time)
-            self.hud.atualizar_powerups(self.player1_sprite,self.player2_sprite)
+            if not self.pausado:
+                #hud
+                self.hud.atualizar_tempo(delta_time)
+                self.hud.atualizar_powerups(self.player1_sprite,self.player2_sprite)
 
-            #atualizar fisica do jogo (checagens de colisão)
-            self.physics_engine.update()
-            self.physics_engine2.update()
-            
-            
-            #movimentação player 1 e 2
-            for player in self.player_list:
-                player.mover()
-                player.evitar_fuga(SCREEN_WIDTH,SCREEN_HEIGHT-HUD_HEIGHT)
+                #atualizar fisica do jogo (checagens de colisão)
+                self.physics_engine.update()
+                self.physics_engine2.update()
+                
+                #movimentação player 1 e 2
+                for player in self.player_list:
+                    player.mover()
+                    player.evitar_fuga(SCREEN_WIDTH,SCREEN_HEIGHT-HUD_HEIGHT)
 
-            for bomba_plantada in self.bomb_list:
-                explodiu = bomba_plantada.explodir(delta_time,self.texturas_totais_explosao)
-                if explodiu is not None:
-                    for pedaco_explosao in explodiu:
-                        self.explosao_list.append(pedaco_explosao)
+                for bomba_plantada in self.bomb_list:
+                    explodiu = bomba_plantada.explodir(delta_time,self.texturas_totais_explosao)
+                    if explodiu is not None:
+                        for pedaco_explosao in explodiu:
+                            self.explosao_list.append(pedaco_explosao)
 
-            #checar colisão das explosões
-            for explosao in self.explosao_list:
-                explosao.update(delta_time)
-                hits_paredes = arcade.check_for_collision_with_list(explosao,self.wall_list)
-                hits_players = arcade.check_for_collision_with_list(explosao,self.player_list)
-                for parede_atingida in hits_paredes:
-                    indestrutivel = isinstance(parede_atingida,Indestrutivel)
-                    if indestrutivel:
-                        explosao.kill()
-                    else:
-                        power_up = parede_atingida.destruir_bloco()
-                        if power_up is not None:
-                            self.power_up_list.append(power_up)
+                #checar colisão das explosões
+                for explosao in self.explosao_list:
+                    explosao.update(delta_time)
+                    hits_paredes = arcade.check_for_collision_with_list(explosao,self.wall_list)
+                    hits_players = arcade.check_for_collision_with_list(explosao,self.player_list)
+                    for parede_atingida in hits_paredes:
+                        indestrutivel = isinstance(parede_atingida,Indestrutivel)
+                        if indestrutivel:
+                            explosao.kill()
+                        else:
+                            power_up = parede_atingida.destruir_bloco()
+                            if power_up is not None:
+                                self.power_up_list.append(power_up)
 
-                for player_atingido in hits_players:
-                    player_atingido.vidas -= 1
-                    if player_atingido.vidas == 0:
-                        arcade.sound.play_sound(player_atingido.som)
-                        player_atingido.kill()
+                    for player_atingido in hits_players:
+                        player_atingido.vidas -= 1
+                        if player_atingido.vidas == 0:
+                            arcade.sound.play_sound(player_atingido.som)
+                            player_atingido.kill()
 
-            #checar por colisões com powerups
-            if self.power_up_list is not None:
-                for power_up in self.power_up_list:
-                    power_up.update()
-                    coletas = arcade.check_for_collision_with_list(power_up,self.player_list)
-                    for coleta in coletas:
-                        power_up.coletar_powerUp(coleta)
+                #checar por colisões com powerups
+                if self.power_up_list is not None:
+                    for power_up in self.power_up_list:
+                        power_up.update()
+                        coletas = arcade.check_for_collision_with_list(power_up,self.player_list)
+                        for coleta in coletas:
+                            power_up.coletar_powerUp(coleta)
 
-            self.set_mouse_visible(True)
-            
+
         elif self.estado_atual == PAUSE:
             self.set_mouse_visible(True)
 
@@ -244,23 +251,33 @@ class Jogo(arcade.Window):
         if self.estado_atual == SELECAO_PERSONAGEM:
             self.selecao_personagem.on_key_press_p1(key,key_modifiers)
         
-
-
         if self.estado_atual == PARTIDA:
-            for player in self.player_list:
-                bomba_solicitada = player.on_key_press(key,key_modifiers)
-                if bomba_solicitada:
-                    bomba = player.plantar_bomba()
-                    self.bomb_list.append(bomba)
-        
+            if not self.pausado:
+                for player in self.player_list:
+                    bomba_solicitada = player.on_key_press(key,key_modifiers)
+                    if bomba_solicitada:
+                        bomba = player.plantar_bomba()
+                        self.bomb_list.append(bomba)
+
+            
+                
     def on_key_release(self, key, key_modifiers):
         if self.estado_atual == MENU:
             pass
         elif self.estado_atual == SELECAO_PERSONAGEM:
             pass
         elif self.estado_atual == PARTIDA:
-            for player in self.player_list:
-                player.on_key_release(key,key_modifiers)
+            if not self.pausado:
+                for player in self.player_list:
+                    player.on_key_release(key,key_modifiers)
+
+                if key == arcade.key.ESCAPE:
+                    self.pausado = True
+
+            else:
+                if key == arcade.key.ESCAPE:
+                    self.pausado = False
+
         elif self.estado_atual == PAUSE:
             pass
         elif self.estado_atual == POS_PARTIDA:
@@ -272,6 +289,9 @@ class Jogo(arcade.Window):
 
         if self.estado_atual == SELECAO_PERSONAGEM:
             self.selecao_personagem.on_mouse_press_selecao(x,y,button,key_modifiers)
+
+        if self.pausado:
+            self.tela_pause.on_mouse_press(x,y,button,key_modifiers)
             
 
     def on_mouse_release(self,x,y,button,key_modifiers):
@@ -289,7 +309,18 @@ class Jogo(arcade.Window):
                     self.estado_atual = resultado[0]
                     self.tipo_p1 = resultado[1]
                     self.tipo_p2 = resultado[2]
+                    self.selecao_personagem.personagem_p1 = None
+                    self.selecao_personagem.personagem_p2 = None
                     self.setup()
+        
+        if self.pausado:
+            proxima_acao = self.tela_pause.on_mouse_release(x,y,button,key_modifiers)
+            if proxima_acao is not None:
+                if proxima_acao == PAUSE:
+                    self.pausado = False
+                else:
+                    self.estado_atual = proxima_acao
+                
 
 def main():
     """ Main method """
