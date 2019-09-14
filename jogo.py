@@ -12,6 +12,7 @@ from mapa import Mapa
 from menu import Menu
 from selecao import Selecao_personagem
 from pause import Tela_pause
+from pos_partida import Pos_partida
 
 SCREEN_WIDTH = HUD_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -49,6 +50,7 @@ class Jogo(arcade.Window):
         #carregar apenas na execução do jogo
         self.hud = None
         self.mapa = None
+        self.pos_partida = None
         
 
         #carregar antes porque são importantes
@@ -56,6 +58,7 @@ class Jogo(arcade.Window):
         self.menu = Menu(SCREEN_WIDTH,SCREEN_HEIGHT)
         self.tela_pause = Tela_pause(SCREEN_WIDTH,SCREEN_HEIGHT)
         self.estado_atual = MENU
+        
 
 
         #fisica
@@ -120,6 +123,7 @@ class Jogo(arcade.Window):
             #interface
             self.hud = Hud(HUD_WIDTH,HUD_HEIGHT,HUD_CENTER_X,HUD_CENTER_Y,DURACAO_PARTIDA,self.player1_sprite,self.player2_sprite)
             self.mapa = Mapa(SCREEN_WIDTH,SCREEN_HEIGHT-HUD_HEIGHT,32,32)
+            self.pos_partida = Pos_partida(SCREEN_WIDTH,SCREEN_HEIGHT,self.player1_sprite,self.player2_sprite)
             
             self.background_list = self.mapa.get_background()
             self.destrutiveis = self.mapa.get_destrutiveis()
@@ -180,7 +184,7 @@ class Jogo(arcade.Window):
         elif self.estado_atual == PARTIDA:
             self.draw_game()
         elif self.estado_atual == POS_PARTIDA:
-            pass
+            self.pos_partida.draw_pos_partida()
     
     def update(self, delta_time):
         if self.estado_atual == MENU:
@@ -226,7 +230,15 @@ class Jogo(arcade.Window):
                         player_atingido.vidas -= 1
                         if player_atingido.vidas == 0:
                             arcade.sound.play_sound(player_atingido.som)
+                            if player_atingido == self.player1_sprite:
+                                self.player1_sprite.ganhou = False
+                                self.player2_sprite.ganhou = True
+                            elif player_atingido == self.player2_sprite:
+                                self.player1_sprite.ganhou = True
+                                self.player2_sprite.ganhou = False
                             player_atingido.kill()
+                            self.estado_atual = POS_PARTIDA
+
 
                 #checar por colisões com powerups
                 if self.power_up_list is not None:
@@ -292,6 +304,9 @@ class Jogo(arcade.Window):
 
         if self.pausado:
             self.tela_pause.on_mouse_press(x,y,button,key_modifiers)
+        
+        if self.estado_atual == POS_PARTIDA:
+            self.pos_partida.on_mouse_press(x,y,button,key_modifiers)
             
 
     def on_mouse_release(self,x,y,button,key_modifiers):
@@ -320,7 +335,17 @@ class Jogo(arcade.Window):
                     self.pausado = False
                 else:
                     self.estado_atual = proxima_acao
-                
+        
+        if self.estado_atual == POS_PARTIDA:
+            proxima_tela = self.pos_partida.on_mouse_release(x,y,button,key_modifiers)
+            if proxima_tela is not None:
+                if proxima_tela == PARTIDA:
+                    self.player1_sprite.ganhou = None
+                    self.player2_sprite.ganhou = None
+                    self.estado_atual = PARTIDA
+                    self.setup()
+                else:
+                    self.estado_atual = proxima_tela
 
 def main():
     """ Main method """

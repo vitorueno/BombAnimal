@@ -2,7 +2,7 @@ import arcade
 from bombas.bomba import Bomba
 
 class Player(arcade.Sprite):
-    def __init__(self,arquivo,escala=0.06,velocidade=5,x=0,y=0,bombas=1,forca=1,vidas=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE):
+    def __init__(self,arquivo,escala=0.06,velocidade=5,x=0,y=0,bombas=1,forca=1,vidas=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,ganhou=None):
         super().__init__(arquivo,scale=escala,center_x=x,center_y=y)
         self.num_bombas = bombas
         self.forca = 1
@@ -19,7 +19,7 @@ class Player(arcade.Sprite):
         self.bomb = bomb
         self.plantado = False
         self.som = arcade.sound.load_sound("sound/down.wav")
-
+        self.ganhou = ganhou
         self.vento = 0
         self.fogo = 0
         self.macaco = False
