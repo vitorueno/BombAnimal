@@ -16,11 +16,14 @@ class Selecao_personagem():
         self.confirmacao_p2 = arcade.Sprite("img/confirmacao_p2.png",scale=1.15,center_x=550,center_y=200) 
         self.personagem_p1 = None
         self.personagem_p2 = None
+        
+        self.titulo = arcade.Sprite("img/textos/texto_selecao.png",scale=1,center_x=self.center_x,center_y=self.center_y+250)
+
 
         self.botao_confirmar = Botao_confirmar_selecao(680,34)
         self.botao_voltar = Botao_voltar_menu(130,34)
 
-    def draw_selecao(self):
+    def draw(self):
         #fundo
         fundo = arcade.Sprite("img/fundo_selecao.png",scale=1,center_x=self.center_x,center_y=self.center_y)
         fundo.draw()
@@ -33,13 +36,13 @@ class Selecao_personagem():
         arcade.draw_rectangle_filled(self.center_x,self.center_y,2,self.screen_height-200,(2,225,237))
 
         #desenho personagens
-        arara = arcade.Sprite("img/animais/arara1.png",0.170,center_x=250,center_y=400)
+        arara = arcade.Sprite("img/animais/full_size/arara1.png",0.170,center_x=250,center_y=400)
         arara.draw()
-        lebre = arcade.Sprite("img/animais/lebre1.png",0.170,center_x=550,center_y=400)
+        lebre = arcade.Sprite("img/animais/full_size/lebre1.png",0.170,center_x=550,center_y=400)
         lebre.draw()
-        pinguim = arcade.Sprite("img/animais/pinguim1.png",0.170,center_x=250,center_y=200)
+        pinguim = arcade.Sprite("img/animais/full_size/pinguim1.png",0.170,center_x=250,center_y=200)
         pinguim.draw()
-        panda = arcade.Sprite("img/animais/panda1.png",0.170,center_x=550,center_y=200)
+        panda = arcade.Sprite("img/animais/full_size/panda1.png",0.170,center_x=550,center_y=200)
         panda.draw()
 
         #borda de seleção p2
@@ -55,19 +58,19 @@ class Selecao_personagem():
             self.confirmacao_p1.draw()
 
         #título
-        titulo = arcade.Sprite("img/texto_selecao.png",scale=1,center_x=self.center_x,center_y=self.center_y+250)
-        titulo.draw()
+        
+        self.titulo.draw()
 
         #botoes
         self.botao_voltar.draw()
         self.botao_confirmar.draw()
 
-    def on_mouse_press_selecao(self,x,y,button,key_modifiers):
+    def on_mouse_press(self,x,y,button,key_modifiers):
         self.botao_voltar.checar_clique(x,y,button,key_modifiers)
         if self.personagem_p1 is not None and self.personagem_p2 is not None:
             self.botao_confirmar.checar_clique(x,y,button,key_modifiers)
 
-    def on_mouse_release_selecao(self,x,y,button,key_modifiers):
+    def on_mouse_release(self,x,y,button,key_modifiers):
         voltar_menu = self.botao_voltar.desclicar(x,y,button,key_modifiers)
         confirmar_selecao = self.botao_confirmar.desclicar(x,y,button,key_modifiers)
         if voltar_menu is not None:

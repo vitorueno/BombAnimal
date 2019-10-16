@@ -11,7 +11,6 @@ class Explosao(arcade.Sprite):
         self.tamanho_lista = len(self.textures)
         self.timer = 0
         self.tamanho = 32
-        self.isolada = False
         
 
     def update(self,delta_time):

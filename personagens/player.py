@@ -1,9 +1,16 @@
 import arcade
 from bombas.bomba import Bomba
 
+TEXTURE_RIGHT = 0
+TEXTURE_LEFT = 1
+TEXTURE_TOP_LEFT = 2
+TEXTURE_TOP_RIGHT = 3
+TEXTURE_BOTTOM = 4
+
 class Player(arcade.Sprite):
-    def __init__(self,arquivo,escala=0.10,velocidade=5,x=0,y=0,bombas=1,forca=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,ganhou=None,limite_imortal=1):
-        super().__init__(arquivo,scale=escala,center_x=x,center_y=y)
+    def __init__(self,arquivo,scale=1,velocidade=5,x=0,y=0,bombas=1,forca=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,ganhou=None,limite_imortal=1.5):
+        super().__init__(scale=scale,center_x=x,center_y=y)
+        self.arquivo = arquivo
         self.num_bombas = bombas
         self.forca = 1
         self.velocidade = velocidade
@@ -26,18 +33,48 @@ class Player(arcade.Sprite):
         self.fogo = 0
         self.macaco = False
         self.capacete = False
+        self.timer_andar = 0.0
+
 
     def mover(self):
         self.change_x = 0
         self.change_y = 0
-        if self.cima and not self.baixo:
+
+        #só cima
+        if self.cima and not self.baixo and not self.direita and not self.esquerda:
             self.change_y += self.velocidade
-        if self.baixo and not self.cima:
+
+        #só baixo
+        elif self.baixo and not self.cima and not self.direita and not self.esquerda:
             self.change_y -= self.velocidade
-        if self.esquerda and not self.direita:
+
+        #só esquerda
+        elif self.esquerda and not self.direita and not self.cima and not self.baixo:
             self.change_x -= self.velocidade
-        if self.direita and not self.esquerda:
+
+        #só direita
+        elif self.direita and not self.esquerda and not self.cima and not self.baixo:
             self.change_x += self.velocidade
+
+        #cima direita
+        elif self.cima and not self.baixo and self.direita and not self.esquerda:
+            self.change_x += self.velocidade/2
+            self.change_y += self.velocidade/2
+        
+        #cima esquerda
+        elif self.cima and not self.baixo and not self.direita and self.esquerda:
+            self.change_x -= self.velocidade/2
+            self.change_y += self.velocidade/2
+
+        #baixo direita
+        elif self.baixo and not self.cima and self.direita and not self.esquerda:
+            self.change_x += self.velocidade/2
+            self.change_y -= self.velocidade/2
+
+        #baixo esquerda
+        elif self.baixo and not self.cima and not self.direita and self.esquerda:
+            self.change_x -= self.velocidade/2
+            self.change_y -= self.velocidade/2
 
     def on_key_press(self,key,key_modifiers):
         if key == self.c:
@@ -82,31 +119,70 @@ class Player(arcade.Sprite):
     def set_num_bombas(self,num_bombas):
         self.num_bombas = num_bombas
 
-    def verificar_sobrevivencia(self,delta_time):
-        perdeu = None
+    def esta_morto(self,delta_time):
+        morto = False
+
         if self.capacete:
             self.imortal = True
             self.capacete = False
-        else:
-            #print(self.imortal)
-            if not self.imortal:
-                arcade.sound.play_sound(self.som)
-                self.ganhou = False
-                perdeu = True
-                self.kill()
-                del(self)
-            else:
-                #self.atualizar_imortal(delta_time),
-                if self.tempo_imortal >= self.limite_imortal:
-                    self.tempo_imortal = 0.0
-                    self.imortal = False
-                else:
-                    self.tempo_imortal += delta_time
-        return perdeu
+
+        if not self.capacete and not self.imortal:
+            arcade.sound.play_sound(self.som)
+            self.ganhou = False
+            morto = True
+            self.kill()
+            del(self)
+
+        return morto
 
     def atualizar_imortal(self,delta_time):
-        self.tempo_imortal += delta_time
-        if self.tempo_imortal >= self.limite_imortal:
-            self.tempo_imortal = 0.0
-            self.imortal = False
-    
+        if self.imortal:
+            self.tempo_imortal += delta_time
+            if self.tempo_imortal >= self.limite_imortal:
+                self.tempo_imortal = 0.0
+                self.imortal = False
+
+    def mudar_texturas(self,delta_time):
+        self.timer_andar += delta_time
+        if self.timer_andar >= 1:
+            self.timer_andar = 0.0
+
+        if self.change_x < 0:
+            self.set_texture(TEXTURE_LEFT)
+        if self.change_x > 0:
+            self.set_texture(TEXTURE_RIGHT)
+        if self.change_y > 0:
+            if self.timer_andar < 0.5:
+                self.set_texture(TEXTURE_TOP_LEFT)
+            elif self.timer_andar > 0.5:
+                self.set_texture(TEXTURE_TOP_RIGHT)
+        if self.change_y < 0:
+            self.set_texture(TEXTURE_BOTTOM)
+        if self.change_x == 0 and self.change_y == 0:
+            self.set_texture(TEXTURE_BOTTOM)
+
+    def update_colisao(self,lista_paredes):
+        self.center_x += self.change_x
+        colisoes = arcade.check_for_collision_with_list(self,lista_paredes)
+
+        if len(colisoes) > 0:
+
+            if self.change_x > 0:
+                for colisao in colisoes:
+                    self.right = min(colisao.left,self.right)
+
+            elif self.change_x < 0:
+                for colisao in colisoes:
+                    self.left = max(colisao.right,self.left)
+            
+        self.center_y += self.change_y
+        colisoes = arcade.check_for_collision_with_list(self,lista_paredes)
+
+        if len(colisoes) > 0:
+            if self.change_y > 0:
+                for colisao in colisoes:
+                    self.top = min(colisao.bottom,self.top)
+
+            elif self.change_y < 0:
+                for colisao in colisoes:
+                    self.bottom = max(colisao.top, self.bottom)

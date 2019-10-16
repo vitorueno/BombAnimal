@@ -45,7 +45,7 @@ class Hud():
         self.timer -= float(delta_time)
 
     
-    def draw_hud(self):
+    def draw(self):
         #retangulo
         arcade.draw_rectangle_filled(self.center_x,self.center_y,self.hud_width,
                                      self.hud_height,(22,120,111,232))
@@ -58,23 +58,23 @@ class Hud():
 
         #descobrir a miniatura do player 1
         if self.tipo_p1 == "arara":
-            miniatura_p1 = arcade.Sprite("img/animais/arara1.png",scale=0.04,center_x=self.center_x-370, center_y= self.center_y)
+            miniatura_p1 = arcade.Sprite("img/animais/full_size/arara1.png",scale=0.04,center_x=self.center_x-370, center_y= self.center_y)
         elif self.tipo_p1 == "lebre":
-            miniatura_p1 = arcade.Sprite("img/animais/lebre1.png",scale=0.04,center_x=self.center_x-370, center_y= self.center_y)
+            miniatura_p1 = arcade.Sprite("img/animais/full_size/lebre1.png",scale=0.04,center_x=self.center_x-370, center_y= self.center_y)
         elif self.tipo_p1 == "pinguim":
-            miniatura_p1 = arcade.Sprite("img/animais/pinguim1.png",scale=0.04,center_x=self.center_x-370, center_y= self.center_y)
+            miniatura_p1 = arcade.Sprite("img/animais/full_size/pinguim1.png",scale=0.04,center_x=self.center_x-370, center_y= self.center_y)
         elif self.tipo_p1 == "panda":
-            miniatura_p1 = arcade.Sprite("img/animais/panda1.png",scale=0.04,center_x=self.center_x-370, center_y= self.center_y)
+            miniatura_p1 = arcade.Sprite("img/animais/full_size/panda1.png",scale=0.04,center_x=self.center_x-370, center_y= self.center_y)
         
         #descobrir a miniatura player 2
         if self.tipo_p2 == "arara":
-            miniatura_p2 = arcade.Sprite("img/animais/arara1.png",scale=0.04,center_x=self.center_x+370, center_y= self.center_y)
+            miniatura_p2 = arcade.Sprite("img/animais/full_size/arara1.png",scale=0.04,center_x=self.center_x+370, center_y= self.center_y)
         elif self.tipo_p2 == "lebre":
-            miniatura_p2 = arcade.Sprite("img/animais/lebre1.png",scale=0.04,center_x=self.center_x+370, center_y= self.center_y)
+            miniatura_p2 = arcade.Sprite("img/animais/full_size/lebre1.png",scale=0.04,center_x=self.center_x+370, center_y= self.center_y)
         elif self.tipo_p2 == "pinguim":
-            miniatura_p2 = arcade.Sprite("img/animais/pinguim1.png",scale=0.04,center_x=self.center_x+370, center_y= self.center_y)
+            miniatura_p2 = arcade.Sprite("img/animais/full_size/pinguim1.png",scale=0.04,center_x=self.center_x+370, center_y= self.center_y)
         elif self.tipo_p2 == "panda":
-            miniatura_p2 = arcade.Sprite("img/animais/panda1.png",scale=0.04,center_x=self.center_x+370, center_y= self.center_y)
+            miniatura_p2 = arcade.Sprite("img/animais/full_size/panda1.png",scale=0.04,center_x=self.center_x+370, center_y= self.center_y)
 
         #desenhar miniaturas
         miniatura_p1.draw()
@@ -131,6 +131,12 @@ class Hud():
                         width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
         arcade.draw_text(str(self.bombas_p1),self.center_x-287, self.center_y-17,arcade.color.WHITE,12,
                         width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
+        if self.p1.capacete:
+            arcade.draw_text("∞",self.center_x-247, self.center_y-17,arcade.color.WHITE,12,
+                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
+        if self.p1.macaco:
+            arcade.draw_text("∞",self.center_x-267, self.center_y-17,arcade.color.WHITE,12,
+                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
 
         #contador powerups do jogador 2
         arcade.draw_text(str(self.fogo_p2),self.center_x+325, self.center_y-17,arcade.color.WHITE,12,
@@ -139,7 +145,12 @@ class Hud():
                         width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
         arcade.draw_text(str(self.bombas_p2),self.center_x+287, self.center_y-17,arcade.color.WHITE,12,
                         width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
-
+        if self.p2.capacete:
+            arcade.draw_text("∞",self.center_x+247, self.center_y-17,arcade.color.WHITE,12,
+                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
+        if self.p2.macaco:
+            arcade.draw_text("∞",self.center_x+267, self.center_y-17,arcade.color.WHITE,12,
+                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
 
         #timer                            
         minutos = int(self.timer) // 60

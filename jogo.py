@@ -7,13 +7,16 @@ from personagens.pinguim import Pinguim
 from personagens.panda import Panda
 from blocos.destrutivel import Destrutivel
 from blocos.indestrutivel import Indestrutivel
-from hud import Hud
-from mapa import Mapa
-from menu import Menu
-from selecao import Selecao_personagem
-from pause import Tela_pause
-from pos_partida import Pos_partida
+from telas.hud import Hud
+from telas.mapa import Mapa
+from telas.menu import Menu
+from telas.selecao import Selecao_personagem
+from telas.pause import Tela_pause
+from telas.pos_partida import Pos_partida
+from telas.ajuda import Ajuda
+from telas.configuracoes import Configuracoes
 from bombas.explosao import Explosao_central
+
 
 SCREEN_WIDTH = HUD_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -38,6 +41,38 @@ PAUSE = 3
 POS_PARTIDA = 4
 OPCOES = 5
 SAIR = 6
+AJUDA = 7
+PROXIMA_PAG_AJUDA = 8
+VOLTAR_PAG_AJUDA = 9
+CONFIRMAR_CONFIGURACAO = 10
+VOLTAR_PADRAO = 11
+
+CONFIG_PADRAO = {
+  "cima_p1": arcade.key.W,
+  "direita_p1": arcade.key.D,
+  "baixo_p1": arcade.key.S,
+  "esquerda_p1": arcade.key.A,
+  "bomba_p1": arcade.key.SPACE,
+  "cima_p2":arcade.key.UP,
+  "direita_p2":arcade.key.RIGHT,
+  "baixo_p2":arcade.key.DOWN,
+  "esquerda_p2":arcade.key.LEFT,
+  "bomba_p2":arcade.key.ENTER
+}
+
+config_atual = {
+  "cima_p1": arcade.key.W,
+  "direita_p1": arcade.key.D,
+  "baixo_p1": arcade.key.S,
+  "esquerda_p1": arcade.key.A,
+  "bomba_p1": arcade.key.SPACE,
+  "cima_p2":arcade.key.UP,
+  "direita_p2":arcade.key.RIGHT,
+  "baixo_p2":arcade.key.DOWN,
+  "esquerda_p2":arcade.key.LEFT,
+  "bomba_p2":arcade.key.ENTER
+}
+
 
 class Jogo(arcade.Window):
 
@@ -53,19 +88,17 @@ class Jogo(arcade.Window):
         self.mapa = None
         self.pos_partida = None
         
-
         #carregar antes porque são importantes
-        self.selecao_personagem = Selecao_personagem(SCREEN_WIDTH,SCREEN_HEIGHT)
-        self.menu = Menu(SCREEN_WIDTH,SCREEN_HEIGHT)
-        self.tela_pause = Tela_pause(SCREEN_WIDTH,SCREEN_HEIGHT)
+        self.selecao_personagem = Selecao_personagem(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.menu = Menu(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.tela_pause = Tela_pause(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.ajuda = Ajuda(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.configuracoes = Configuracoes(SCREEN_WIDTH, SCREEN_HEIGHT, config_atual)
         self.estado_atual = MENU
-        
-
 
         #fisica
         self.physics_engine = None
         self.physics_engine2 = None
-        self.physics_engine3 = None
 
         #inicializar listas
         self.wall_list = None
@@ -76,16 +109,21 @@ class Jogo(arcade.Window):
         self.bomb_list = None
         self.explosao_list = None
         self.power_up_list = None
+        self.lista_intransponiveis = None
 
         #inicializar players
-        self.player1_sprite = None
-        self.player2_sprite = None
+        self.player1 = None
+        self.player2 = None
         self.tipo_p1 = "pinguim" 
         self.tipo_p2 = "lebre"
         
-
+        
     def setup(self):
+        global config_atual
+
         if self.estado_atual == PARTIDA:
+
+
             #listas com sprites
             self.wall_list = arcade.SpriteList()
             self.background_list = arcade.SpriteList()
@@ -94,38 +132,50 @@ class Jogo(arcade.Window):
             self.bomb_list = arcade.SpriteList()
             self.explosao_list = arcade.SpriteList()
             self.power_up_list = arcade.SpriteList()
+            self.lista_intransponiveis = arcade.SpriteList()
 
             #personagens
             if self.tipo_p1 == "arara":
-                self.player1_sprite = Arara(x=16,y=16)
+                self.player1 = Arara(x=16,y=16,c=config_atual["cima_p1"],d=config_atual["direita_p1"],
+                b=config_atual["baixo_p1"],e=config_atual["esquerda_p1"],bomb=config_atual["bomba_p1"])
+
             elif self.tipo_p1 == "lebre":
-                self.player1_sprite = Lebre(x=16,y=16)
+                self.player1 = Lebre(x=16,y=16,c=config_atual["cima_p1"],d=config_atual["direita_p1"],
+                b=config_atual["baixo_p1"],e=config_atual["esquerda_p1"],bomb=config_atual["bomba_p1"])
+
             elif self.tipo_p1 == "pinguim":
-                self.player1_sprite = Pinguim(x=16,y=16)
+                self.player1 = Pinguim(x=16,y=16,c=config_atual["cima_p1"],d=config_atual["direita_p1"],
+                b=config_atual["baixo_p1"],e=config_atual["esquerda_p1"],bomb=config_atual["bomba_p1"])
+
             elif self.tipo_p1 == "panda":
-                self.player1_sprite = Panda(x=16,y=16)
+                self.player1 = Panda(x=16,y=16,c=config_atual["cima_p1"],d=config_atual["direita_p1"],
+                b=config_atual["baixo_p1"],e=config_atual["esquerda_p1"],bomb=config_atual["bomba_p1"])
 
             if self.tipo_p2 == "arara":
-                self.player2_sprite = Arara(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,c=arcade.key.UP,b=arcade.key.DOWN,
-                                            d=arcade.key.RIGHT,e=arcade.key.LEFT,bomb=arcade.key.ENTER)
-            elif self.tipo_p2 == "lebre":
-                self.player2_sprite = Lebre(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,c=arcade.key.UP,b=arcade.key.DOWN,
-                                            d=arcade.key.RIGHT,e=arcade.key.LEFT,bomb=arcade.key.ENTER)
-            elif self.tipo_p2 == "pinguim":
-                self.player2_sprite = Pinguim(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,c=arcade.key.UP,b=arcade.key.DOWN,
-                                            d=arcade.key.RIGHT,e=arcade.key.LEFT,bomb=arcade.key.ENTER)
-            elif self.tipo_p2 == "panda":
-                self.player2_sprite = Panda(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,c=arcade.key.UP,b=arcade.key.DOWN,
-                                            d=arcade.key.RIGHT,e=arcade.key.LEFT,bomb=arcade.key.ENTER)
+                self.player2 = Arara(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,c=config_atual["cima_p2"],b=config_atual["baixo_p2"],
+                                    d=config_atual["direita_p2"],e=config_atual["esquerda_p2"],bomb=config_atual["bomba_p2"])
 
-            self.player_list.append(self.player1_sprite)
-            self.player_list.append(self.player2_sprite)
+            elif self.tipo_p2 == "lebre":
+                self.player2 = Lebre(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,c=config_atual["cima_p2"],b=config_atual["baixo_p2"],
+                                    d=config_atual["direita_p2"],e=config_atual["esquerda_p2"],bomb=config_atual["bomba_p2"])
+
+            elif self.tipo_p2 == "pinguim":
+                self.player2 = Pinguim(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,c=config_atual["cima_p2"],b=config_atual["baixo_p2"],
+                                    d=config_atual["direita_p2"],e=config_atual["esquerda_p2"],bomb=config_atual["bomba_p2"])
+
+            elif self.tipo_p2 == "panda":
+                self.player2 = Panda(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,c=config_atual["cima_p2"],b=config_atual["baixo_p2"],
+                                    d=config_atual["direita_p2"],e=config_atual["esquerda_p2"],bomb=config_atual["bomba_p2"])
+
+            self.player_list.append(self.player1)
+            self.player_list.append(self.player2)
 
             #interface
-            self.hud = Hud(HUD_WIDTH,HUD_HEIGHT,HUD_CENTER_X,HUD_CENTER_Y,DURACAO_PARTIDA,self.player1_sprite,self.player2_sprite)
+            self.hud = Hud(HUD_WIDTH,HUD_HEIGHT,HUD_CENTER_X,HUD_CENTER_Y,DURACAO_PARTIDA,self.player1,self.player2)
             self.mapa = Mapa(SCREEN_WIDTH,SCREEN_HEIGHT-HUD_HEIGHT,32,32)
-            self.pos_partida = Pos_partida(SCREEN_WIDTH,SCREEN_HEIGHT,self.player1_sprite,self.player2_sprite)
+            self.pos_partida = Pos_partida(SCREEN_WIDTH,SCREEN_HEIGHT,self.player1,self.player2)
             
+
             self.background_list = self.mapa.get_background()
             self.destrutiveis = self.mapa.get_destrutiveis()
 
@@ -134,8 +184,10 @@ class Jogo(arcade.Window):
 
             for bloco in temp_indestrutiveis:
                 self.wall_list.append(bloco)
+                self.lista_intransponiveis.append(bloco)
             for bloco in temp_destrutiveis:
                 self.wall_list.append(bloco)
+                self.lista_intransponiveis.append(bloco)
 
             #carregar texturas para criar explosões
             self.textura_explosao_central = []
@@ -156,9 +208,11 @@ class Jogo(arcade.Window):
 
 
             #definir engine de física que cuida das colisões
-            self.physics_engine = arcade.PhysicsEngineSimple(self.player1_sprite,self.wall_list)
-            self.physics_engine2 = arcade.PhysicsEngineSimple(self.player2_sprite,self.wall_list)
-        
+            #self.physics_engine = arcade.PhysicsEngineSimple(self.player1,self.wall_list)
+            #self.physics_engine2 = arcade.PhysicsEngineSimple(self.player2,self.wall_list)
+
+    
+            
     def draw_game(self):
         #listas de coisas desenhadas
         self.background_list.draw()
@@ -169,7 +223,7 @@ class Jogo(arcade.Window):
         self.power_up_list.draw()
 
         #interface
-        self.hud.draw_hud()
+        self.hud.draw()
 
         if self.pausado:
             self.tela_pause.draw()
@@ -179,41 +233,96 @@ class Jogo(arcade.Window):
         arcade.start_render()
         
         if self.estado_atual == MENU:
-            self.menu.draw_menu()
+            self.menu.draw()
         elif self.estado_atual == SELECAO_PERSONAGEM:
-            self.selecao_personagem.draw_selecao()
+            self.selecao_personagem.draw()
         elif self.estado_atual == PARTIDA:
             self.draw_game()
         elif self.estado_atual == POS_PARTIDA:
-            self.pos_partida.draw_pos_partida()
+            self.pos_partida.draw()
+        elif self.estado_atual == AJUDA:
+            self.ajuda.draw()
+        elif self.estado_atual == OPCOES:
+            self.configuracoes.draw()
+
     
     def update(self, delta_time):
         if self.estado_atual == MENU:
             self.set_mouse_visible(True)
-        elif self.estado_atual == SELECAO_PERSONAGEM: 
+        if self.estado_atual == SELECAO_PERSONAGEM: 
             self.set_mouse_visible(True)
-        elif self.estado_atual == PARTIDA:
+        if self.estado_atual == PARTIDA:
             if not self.pausado:
-                #hud
+                #atualizando informações da hud
                 self.hud.atualizar_tempo(delta_time)
-                self.hud.atualizar_powerups(self.player1_sprite,self.player2_sprite)
+                self.hud.atualizar_powerups(self.player1,self.player2)
 
-                #atualizar fisica do jogo (checagens de colisão)
-                self.physics_engine.update()
-                self.physics_engine2.update()
-                
                 #movimentação player 1 e 2
                 for player in self.player_list:
+                    player.update_colisao(self.lista_intransponiveis)
                     player.mover()
                     player.evitar_fuga(SCREEN_WIDTH,SCREEN_HEIGHT-HUD_HEIGHT)
-
+                    player.atualizar_imortal(delta_time)
+                    player.mudar_texturas(delta_time)
+                    if player.tipo == "arara":
+                        player.pular_parede(self.lista_intransponiveis,self.mapa,delta_time)
+                     
+                #atualizando bombas plantadas e verificando a colisão com o item mão de primata
                 for bomba_plantada in self.bomb_list:
+                    colisao_bomba = arcade.check_for_collision_with_list(bomba_plantada,self.player_list)
+                    for player in colisao_bomba:
+                        if player.change_x > 0 and player.center_x < bomba_plantada.left:
+                            if player.macaco and not bomba_plantada.empurrada:
+                                existe_bloco = self.mapa.get_bloco_da_coord(bomba_plantada.center_x + 32,bomba_plantada.center_y)
+                                if not existe_bloco and (bomba_plantada.center_x + 32) <= SCREEN_WIDTH and not bomba_plantada.empurrada:
+                                    bomba_plantada.center_x += 32
+                                    bomba_plantada.empurrada = True
+                                else:
+                                    player.right = min(bomba_plantada.left,player.right)
+                            else:
+                                player.right = min(bomba_plantada.left,player.right)
+                        
+                        elif player.change_x < 0 and player.center_x > bomba_plantada.right:
+                            if player.macaco and not bomba_plantada.empurrada:
+                                existe_bloco = self.mapa.get_bloco_da_coord(bomba_plantada.center_x - 32,bomba_plantada.center_y)
+                                if not existe_bloco and (bomba_plantada.center_x - 32) >= 0 and not bomba_plantada.empurrada:
+                                    bomba_plantada.center_x -= 32
+                                    bomba_plantada.empurrada = True
+                                else:
+                                    player.left = max(bomba_plantada.left,player.right)
+                            else:
+                                player.left = max(bomba_plantada.left,player.right)
+
+                        elif player.change_y > 0 and player.center_y < bomba_plantada.bottom:
+                            if player.macaco and not bomba_plantada.empurrada:
+                                existe_bloco = self.mapa.get_bloco_da_coord(bomba_plantada.center_x,bomba_plantada.center_y + 32)
+                                if not existe_bloco and (bomba_plantada.center_y + 32) <= SCREEN_HEIGHT and not bomba_plantada.empurrada:
+                                    bomba_plantada.center_y += 32
+                                    bomba_plantada.empurrada = True
+                                else:
+                                    player.top = min(bomba_plantada.bottom,player.top)
+                            else:
+                                player.top = min(bomba_plantada.bottom,player.top)
+
+                        elif player.change_y < 0 and player.center_y > bomba_plantada.top:
+                            if player.macaco and not bomba_plantada.empurrada:
+                                existe_bloco = self.mapa.get_bloco_da_coord(bomba_plantada.center_x,bomba_plantada.center_y - 32)
+                                if not existe_bloco and (bomba_plantada.center_y - 32) >= 0 and not bomba_plantada.empurrada:
+                                    bomba_plantada.center_y -= 32
+                                    bomba_plantada.empurrada = True
+                                else:
+                                    player.bottom = max(bomba_plantada.top, player.bottom)
+                            else:
+                                player.bottom = max(bomba_plantada.top, player.bottom)
+
                     explodiu = bomba_plantada.explodir(delta_time,self.texturas_totais_explosao)
+
+                   
                     if explodiu is not None:
                         for pedaco_explosao in explodiu:
                             self.explosao_list.append(pedaco_explosao)
-
-                #checar colisão das explosões com blocos
+                    
+                #checar colisão das explosões com blocosa
                 for explosao in self.explosao_list:
 
                     explosao.update(delta_time)
@@ -272,13 +381,12 @@ class Jogo(arcade.Window):
                 for explosao in self.explosao_list:
                     hits_players = arcade.check_for_collision_with_list(explosao,self.player_list)
                     for player_atingido in hits_players:
-                        estado = player_atingido.verificar_sobrevivencia(delta_time)
-                        print(estado)
-                        if estado is not None:
-                            if player_atingido == self.player1_sprite:
-                                self.player2_sprite.ganhou = True
+                        estado = player_atingido.esta_morto(delta_time)
+                        if estado:
+                            if player_atingido == self.player1:
+                                self.player2.ganhou = True
                             else:
-                                self.player1_sprite.ganhou = True
+                                self.player1.ganhou = True
                             self.estado_atual = POS_PARTIDA
 
                 #checar por colisões com powerups
@@ -289,17 +397,20 @@ class Jogo(arcade.Window):
                         for coleta in coletas:
                             power_up.coletar_powerUp(coleta)
 
-
-        elif self.estado_atual == PAUSE:
+        if self.estado_atual == PAUSE:
             self.set_mouse_visible(True)
 
-        elif self.estado_atual == POS_PARTIDA:
+        if self.estado_atual == POS_PARTIDA:
             self.set_mouse_visible(True)
-        
-        elif self.estado_atual == SAIR:
+
+        if self.estado_atual == AJUDA:
+            self.set_mouse_visible(True)
+
+        if self.estado_atual == SAIR:
             self.close()
 
-
+    #fim do update
+ 
     def on_key_press(self, key, key_modifiers):
         if self.estado_atual == SELECAO_PERSONAGEM:
             self.selecao_personagem.on_key_press_p1(key,key_modifiers)
@@ -312,52 +423,75 @@ class Jogo(arcade.Window):
                         bomba = player.plantar_bomba()
                         self.bomb_list.append(bomba)
 
-            
+    #fim do on_key_press
                 
     def on_key_release(self, key, key_modifiers):
         if self.estado_atual == MENU:
             pass
-        elif self.estado_atual == SELECAO_PERSONAGEM:
+        if self.estado_atual == SELECAO_PERSONAGEM:
             pass
-        elif self.estado_atual == PARTIDA:
+        if self.estado_atual == PARTIDA:
             if not self.pausado:
                 for player in self.player_list:
                     player.on_key_release(key,key_modifiers)
-
                 if key == arcade.key.ESCAPE:
                     self.pausado = True
-
             else:
                 if key == arcade.key.ESCAPE:
                     self.pausado = False
 
-        elif self.estado_atual == PAUSE:
+        if self.estado_atual == PAUSE:
             pass
-        elif self.estado_atual == POS_PARTIDA:
+        if self.estado_atual == POS_PARTIDA:
             pass
+        if self.estado_atual == OPCOES:
+            self.configuracoes.on_key_release(key,key_modifiers)
+
+    #fim do on_key_release
 
     def on_mouse_press(self, x, y, button, key_modifiers):
         if self.estado_atual == MENU:
-            self.menu.on_mouse_press_menu(x,y,button,key_modifiers)
+            self.menu.on_mouse_press(x,y,button,key_modifiers)
 
         if self.estado_atual == SELECAO_PERSONAGEM:
-            self.selecao_personagem.on_mouse_press_selecao(x,y,button,key_modifiers)
+            self.selecao_personagem.on_mouse_press(x,y,button,key_modifiers)
 
         if self.pausado:
             self.tela_pause.on_mouse_press(x,y,button,key_modifiers)
         
         if self.estado_atual == POS_PARTIDA:
             self.pos_partida.on_mouse_press(x,y,button,key_modifiers)
-            
+        
+        if self.estado_atual == AJUDA:
+            self.ajuda.on_mouse_press(x,y,button,key_modifiers)
+
+        if self.estado_atual == OPCOES:
+            self.configuracoes.on_mouse_press(x,y,button,key_modifiers)
+        
 
     def on_mouse_release(self,x,y,button,key_modifiers):
+        global config_atual,CONFIG_PADRAO
+
         if self.estado_atual == MENU:
-            resultado = self.menu.on_mouse_release_menu(x,y,button,key_modifiers)
+            resultado = self.menu.on_mouse_release(x,y,button,key_modifiers)
             if resultado is not None:
                 self.estado_atual = resultado
 
+        if self.estado_atual == OPCOES:
+            release = self.configuracoes.on_mouse_release(x,y,button,key_modifiers)
+            if release is not None:
+                if release == CONFIRMAR_CONFIGURACAO:
+                    for chave in config_atual:
+                        config_atual[chave] = self.configuracoes.config_atuais[chave]
+
+                elif release == VOLTAR_PADRAO: 
+                    for chave in self.configuracoes.config_atuais:
+                        self.configuracoes.config_atuais[chave] = CONFIG_PADRAO[chave]
+                else:
+                    self.estado_atual = release
+            
         if self.estado_atual == SELECAO_PERSONAGEM:
-            resultado = self.selecao_personagem.on_mouse_release_selecao(x,y,button,key_modifiers)
+            resultado = self.selecao_personagem.on_mouse_release(x,y,button,key_modifiers)
             if resultado is not None:
                 if type(resultado) == int:
                     self.estado_atual = resultado
@@ -381,12 +515,20 @@ class Jogo(arcade.Window):
             proxima_tela = self.pos_partida.on_mouse_release(x,y,button,key_modifiers)
             if proxima_tela is not None:
                 if proxima_tela == PARTIDA:
-                    self.player1_sprite.ganhou = None
-                    self.player2_sprite.ganhou = None
+                    self.player1.ganhou = None
+                    self.player2.ganhou = None
                     self.estado_atual = PARTIDA
                     self.setup()
                 else:
                     self.estado_atual = proxima_tela
+        
+        if self.estado_atual == AJUDA:
+            proxima_tela = self.ajuda.on_mouse_release(x,y,button,key_modifiers)
+            if proxima_tela is not None:
+                if proxima_tela != PROXIMA_PAG_AJUDA and proxima_tela != VOLTAR_PAG_AJUDA:
+                    self.ajuda.pagina_atual = 1
+                    self.estado_atual = proxima_tela
+
 
 def main():
     """ Main method """

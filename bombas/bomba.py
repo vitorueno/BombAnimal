@@ -13,6 +13,7 @@ class Bomba(arcade.Sprite):
         self.som_explosao = arcade.sound.load_sound("sound/explosion.wav")
         self.som_colocar_bomba = arcade.sound.load_sound("sound/naosei.wav")
         arcade.sound.play_sound(self.som_colocar_bomba)
+        self.empurrada = False
 
 
     def explodir(self,delta_time,lista_texturas_explosao):
