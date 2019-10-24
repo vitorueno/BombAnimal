@@ -10,7 +10,7 @@ TEXTURE_BOTTOM = 4
 
 class Lebre(Player):
     def __init__(self,x=0,y=0,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,
-                arquivo="img/animais/lebre/lebre1.png",scale=1.09,velocidade=5.75,bombas=1,forca=1):     
+                arquivo="img/animais/lebre/lebre1.png",scale=1.09,velocidade=3.45,bombas=1,forca=1):     
         super().__init__(arquivo=arquivo,scale=scale,velocidade=velocidade,x=x,y=y,bombas=bombas,forca=forca,c=c,b=b,d=d,e=e,bomb=bomb)
         self.tipo = "lebre"
         self.load_images("img/animais/lebre/",1.09)

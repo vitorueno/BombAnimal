@@ -47,7 +47,9 @@ class Mapa():
             ["g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g"]
         ]
 
-    
+        grama_mapa = Grama(map_width/2,map_height/2)
+        self.__background_list.append(grama_mapa)
+
         y1 = self.__img_height / 2
         for matriz in self.__map_matriz:
             x1 = self.__img_width / 2
@@ -55,15 +57,15 @@ class Mapa():
             for elemento in matriz:
 
                 #cria grama sozinha
-                if elemento == "g":
-                    objeto = Grama(x1,y1)
-                    self.__background_list.append(objeto)
+                #if elemento == "g":
+                    #objeto = Grama(x1,y1)
+                    #self.__background_list.append(objeto)
                 #cria arvores com grama de fundo
                 if elemento == "a":
                     tipo = random.randint(1,100)
-                    objeto2 = Grama(x1,y1)
-                    self.__background_list.append(objeto2)
-
+                    #objeto2 = Grama(x1,y1)
+                    #self.__background_list.append(objeto2)
+                
                     if tipo > 0 and tipo <= 75:
                         objeto = Arvore_verde(x1,y1)
                         self.__destrutiveis.append(objeto)
@@ -90,8 +92,8 @@ class Mapa():
                     objeto = Parede(x1,y1)
                     self.__indestrutiveis.append(objeto)
                     self.__parede.append(objeto)
-                    objeto2 = Grama(x1,y1)
-                    self.__background_list.append(objeto2)
+                    #objeto2 = Grama(x1,y1)
+                    #self.__background_list.append(objeto2)
                     
                     
                 x1 += self.__img_width

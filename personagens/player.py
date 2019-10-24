@@ -8,7 +8,7 @@ TEXTURE_TOP_RIGHT = 3
 TEXTURE_BOTTOM = 4
 
 class Player(arcade.Sprite):
-    def __init__(self,arquivo,scale=1,velocidade=5,x=0,y=0,bombas=1,forca=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,ganhou=None,limite_imortal=1.5):
+    def __init__(self,arquivo,scale=1,velocidade=3,x=0,y=0,bombas=1,forca=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,ganhou=None,limite_imortal=1.5):
         super().__init__(scale=scale,center_x=x,center_y=y)
         self.arquivo = arquivo
         self.num_bombas = bombas
