@@ -12,7 +12,7 @@ class Ajuda():
         self.pagina_atual = 1
 
         self.titulo = arcade.Sprite('img/textos/texto_ajuda.png',1,center_x=self.center_x,center_y=self.center_y + 250)
-        self.fundo = arcade.Sprite('img/fundo_menu.png',1,center_x=self.center_x,center_y=self.center_y)
+        self.fundo = arcade.Sprite('img/fundos/fundo_menu.png',1,center_x=self.center_x,center_y=self.center_y)
 
         
         botao_voltar_pagina = Botao_voltar_pag_ajuda(self.center_x - 230,self.center_y-10 - 210)

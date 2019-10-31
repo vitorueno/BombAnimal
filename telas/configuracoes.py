@@ -15,7 +15,7 @@ class Configuracoes():
         self.center_x = screen_width/2
         self.center_y = screen_height/2
         self.titulo = arcade.Sprite("img/textos/texto_configuracoes.png",scale=1,center_x=self.center_x,center_y=self.center_y + 250)
-        self.fundo = arcade.Sprite('img/fundo_menu.png',1,center_x=self.center_x,center_y=self.center_y)
+        self.fundo = arcade.Sprite('img/fundos/fundo_menu.png',1,center_x=self.center_x,center_y=self.center_y)
 
         self.config_atuais = config_atuais
 
