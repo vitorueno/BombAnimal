@@ -1,12 +1,12 @@
 <img src="img/textos/logo.png" width="300px">
-<h2>Jogo criado com python e arcade para dois jogadores simultaneamente baseado no clássico "Bomberman".</h2>
+<h2>Jogo criado com python e arcade para dois jogadores simultaneamente, baseado no clássico "Bomberman".</h2>
 <img src="img/prints/readme1.png">
 <img src="img/prints/readme2.png">
 
 <h3>O que é?</h3>
 
 <p>BombAnimal é um projeto criado na disciplina de projeto integrador II na turma 202 informática do Instituto Federal Catarinense
-Campus Blumenau. O objetivo do projeto é exercítar os conhecimentos adquiridos ao longo do ano através da implementação e criação
+Campus Blumenau. O objetivo do projeto é exercitar os conhecimentos adquiridos ao longo do ano através da implementação e criação
 de um jogo para dois jogadores simultâneos em um mesmo teclado. Além disso, BombAnimal também visa verificar a viabilidade que a 
 criação de jogos pode exercer no aprendizado de programação.</p>
 
