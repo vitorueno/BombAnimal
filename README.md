@@ -1,3 +1,7 @@
+<img src="img/textos/logo.png">
+<img src="img/prints/readme1.png">
+<img src="img/prints/readme2.png">
+
 <h1>BombAnimal</h1>
 <h2>Jogo criado com python e arcade para dois jogadores simultaneamente baseado no clássico "Bomberman".</h2>
 
