@@ -3,7 +3,7 @@ from blocos.bloco import Bloco
 from .explosao import Explosao_central,Explosao_trilho,Explosao_fim
 
 class Bomba(arcade.Sprite):
-    def __init__(self, escala, imagem="img/bomba3.png", player=None, x=0, y=0, forca=1, limite=4):
+    def __init__(self, escala, imagem="img/bombas/bomba3.png", player=None, x=0, y=0, forca=1, limite=4):
         self.player = player
         super().__init__(imagem,escala,center_x=x,center_y=y)
         self.raio = forca

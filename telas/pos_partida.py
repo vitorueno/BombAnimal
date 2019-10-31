@@ -22,16 +22,7 @@ class Pos_partida():
     
     def draw(self):
         #fundo
-
-        #opcao 1
-        '''fundo = arcade.Sprite("img/fundo_pos_partida.png",center_x=self.center_x,center_y=self.center_y,scale=1)
-        fundo.draw()'''
-        #opcao 2
-        '''fundo = arcade.Sprite("img/fundo_pos_partida2.png",center_x=self.center_x,center_y=self.center_y,scale=1)
-        fundo.draw()'''
-
-        #opcao 3
-        fundo = arcade.Sprite("img/fundo_pos_partida3.png",center_x=self.center_x,center_y=self.center_y,scale=1)
+        fundo = arcade.Sprite("img/fundos/fundo_pos_partida3.png",center_x=self.center_x,center_y=self.center_y,scale=1)
         fundo.draw()
 
         #retangulo

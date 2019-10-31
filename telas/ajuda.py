@@ -34,9 +34,9 @@ class Ajuda():
         self.texto_partida = arcade.Sprite('img/textos/texto_partida_ajuda.png',1,center_x=self.center_x,center_y=self.center_y)
         self.texto_contato = arcade.Sprite('img/textos/texto_contato_ajuda.png',1,center_x=self.center_x,center_y=self.center_y)
 
-        self.tabela_itens = arcade.Sprite('img/tabela_itens.png',0.75,center_x=self.center_x,center_y=self.center_y - 10)
-        self.tabela_personagens = arcade.Sprite('img/tabela_personagens.png',0.9,center_x=self.center_x,center_y=self.center_y-10)
-        self.teclado = arcade.Sprite('img/teclas.png',0.389,center_x=self.center_x,center_y=self.center_y - 10)
+        self.tabela_itens = arcade.Sprite('img/ajuda/tabela_itens.png',0.75,center_x=self.center_x,center_y=self.center_y - 10)
+        self.tabela_personagens = arcade.Sprite('img/ajuda/tabela_personagens.png',0.9,center_x=self.center_x,center_y=self.center_y-10)
+        self.teclado = arcade.Sprite('img/ajuda/teclas.png',0.389,center_x=self.center_x,center_y=self.center_y - 10)
 
     def draw(self):
         self.fundo.draw()

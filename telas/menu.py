@@ -22,7 +22,7 @@ class Menu():
         
     def draw(self):
         #fundo
-        fundo = arcade.Sprite("img/fundo_menu.png",center_x=self.center_x,center_y=self.center_y,scale=1)
+        fundo = arcade.Sprite("img/fundos/fundo_menu.png",center_x=self.center_x,center_y=self.center_y,scale=1)
         fundo.draw()
 
         #retangulo

@@ -10,10 +10,10 @@ class Selecao_personagem():
         self.center_x = screen_width/2
         self.center_y = screen_height/2
 
-        self.borda_p1 = arcade.Sprite("img/selecao_p1.png",scale=1.15,center_x=250,center_y=400)
-        self.borda_p2 = arcade.Sprite("img/selecao_p2.png",scale=1.15,center_x=550,center_y=200) 
-        self.confirmacao_p1 = arcade.Sprite("img/confirmacao_p1.png",scale=1.15,center_x=250,center_y=400)
-        self.confirmacao_p2 = arcade.Sprite("img/confirmacao_p2.png",scale=1.15,center_x=550,center_y=200) 
+        self.borda_p1 = arcade.Sprite("img/selecao/selecao_p1.png",scale=1.15,center_x=250,center_y=400)
+        self.borda_p2 = arcade.Sprite("img/selecao/selecao_p2.png",scale=1.15,center_x=550,center_y=200) 
+        self.confirmacao_p1 = arcade.Sprite("img/selecao/confirmacao_p1.png",scale=1.15,center_x=250,center_y=400)
+        self.confirmacao_p2 = arcade.Sprite("img/selecao/confirmacao_p2.png",scale=1.15,center_x=550,center_y=200) 
         self.personagem_p1 = None
         self.personagem_p2 = None
         
@@ -25,7 +25,7 @@ class Selecao_personagem():
 
     def draw(self):
         #fundo
-        fundo = arcade.Sprite("img/fundo_selecao.png",scale=1,center_x=self.center_x,center_y=self.center_y)
+        fundo = arcade.Sprite("img/fundos/fundo_selecao.png",scale=1,center_x=self.center_x,center_y=self.center_y)
         fundo.draw()
         #retangulo
         arcade.draw_rectangle_filled(self.center_x,self.center_y,self.screen_width - 200, self.screen_height - 200,(22,120,111,232))
