@@ -3,7 +3,7 @@ from blocos.bloco import Bloco
 from .explosao import Explosao_central,Explosao_trilho,Explosao_fim
 
 class Bomba(arcade.Sprite):
-    def __init__(self, escala, imagem="img/bombas/bomba3.png", player=None, x=0, y=0, forca=1, limite=4):
+    def __init__(self, escala=0.5, imagem="img/bombas/bomba3.png", player=None, x=0, y=0, forca=1, limite=4):
         self.player = player
         super().__init__(imagem,escala,center_x=x,center_y=y)
         self.raio = forca
@@ -20,7 +20,8 @@ class Bomba(arcade.Sprite):
         if self.timer >= self.limite:
             arcade.sound.play_sound(self.som_explosao)
             explodiu = self.criar_explosao(lista_texturas_explosao)
-            self.player.num_bombas += 1
+            if self.player is not None:
+                self.player.num_bombas += 1
             self.kill()
             self.timer = 0
             return explodiu

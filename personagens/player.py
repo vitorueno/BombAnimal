@@ -5,7 +5,8 @@ TEXTURE_RIGHT = 0
 TEXTURE_LEFT = 1
 TEXTURE_TOP_LEFT = 2
 TEXTURE_TOP_RIGHT = 3
-TEXTURE_BOTTOM = 4
+TEXTURE_TOP_STAND = 4
+TEXTURE_BOTTOM = 5
 
 class Player(arcade.Sprite):
     def __init__(self,arquivo,scale=1,velocidade=3,x=0,y=0,bombas=1,forca=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,ganhou=None,limite_imortal=1.5):
@@ -34,6 +35,7 @@ class Player(arcade.Sprite):
         self.macaco = False
         self.capacete = False
         self.timer_andar = 0.0
+
 
 
     def mover(self):
@@ -144,8 +146,9 @@ class Player(arcade.Sprite):
 
     def mudar_texturas(self,delta_time):
         self.timer_andar += delta_time
-        if self.timer_andar >= 1:
+        if self.timer_andar >= 2.0:
             self.timer_andar = 0.0
+            
 
         if self.change_x < 0:
             self.set_texture(TEXTURE_LEFT)
@@ -154,8 +157,15 @@ class Player(arcade.Sprite):
         if self.change_y > 0:
             if self.timer_andar < 0.5:
                 self.set_texture(TEXTURE_TOP_LEFT)
-            elif self.timer_andar > 0.5:
+            elif self.timer_andar >= 0.5 and self.timer_andar < 1:
+                self.set_texture(TEXTURE_TOP_STAND)
+            elif self.timer_andar >= 1 and self.timer_andar < 1.5:
                 self.set_texture(TEXTURE_TOP_RIGHT)
+            elif self.timer_andar >= 1.5:
+                self.set_texture(TEXTURE_TOP_STAND)
+        
+
+    
         if self.change_y < 0:
             self.set_texture(TEXTURE_BOTTOM)
         if self.change_x == 0 and self.change_y == 0:

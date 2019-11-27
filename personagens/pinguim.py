@@ -25,6 +25,7 @@ class Pinguim(Player):
         #pra cima ele usa os sprite pra cima 
         self.textures.append(arcade.load_texture(arquivo+"pinguim3.png",scale=escala))
         self.textures.append(arcade.load_texture(arquivo+"pinguim3.png",scale=escala, mirrored= True))
+        self.textures.append(arcade.load_texture(arquivo+'pinguim2.png',scale=escala))
 
         #pra bajxo ele usa o sprite padrão 
         self.textures.append(arcade.load_texture(arquivo+'pinguim1.png',scale=escala))

@@ -26,6 +26,7 @@ class Lebre(Player):
         #pra cima ele usa os sprite pra cima 
         self.textures.append(arcade.load_texture(arquivo+"lebre3.png",scale=escala))
         self.textures.append(arcade.load_texture(arquivo+"lebre3.png",scale=escala, mirrored= True))
+        self.textures.append(arcade.load_texture(arquivo+'lebre2.png',scale=escala))
 
         #pra bajxo ele usa o sprite padrão 
         self.textures.append(arcade.load_texture(arquivo+'lebre1.png',scale=escala))

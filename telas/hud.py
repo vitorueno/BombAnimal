@@ -157,14 +157,11 @@ class Hud():
         segundos = int(self.timer) % 60 
         tempo_texto = f"Tempo: {minutos:02d}:{segundos:02d}"
         morte_subita_texto = f"MORTE SÚBITA"
-        if minutos == 1:
+        if self.timer > 0:
             arcade.draw_text(tempo_texto,self.center_x,self.center_y,arcade.color.WHITE,14,
                             width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
-        elif minutos == 0:
-            arcade.draw_text(morte_subita_texto,self.center_x,self.center_y + 9,arcade.color.RED,14,
+        elif self.timer <= 0:
+            arcade.draw_text(morte_subita_texto,self.center_x,self.center_y,arcade.color.RED,14,
                             width=self.hud_width,align="center", anchor_x="center", anchor_y="center")
-
-            arcade.draw_text(tempo_texto,self.center_x,self.center_y - 9,arcade.color.RED,14,
-                            width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
 
 

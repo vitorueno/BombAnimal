@@ -26,6 +26,7 @@ class Panda(Player):
         #pra cima ele usa os sprite pra cima 
         self.textures.append(arcade.load_texture(arquivo+"panda3.png",scale=escala))
         self.textures.append(arcade.load_texture(arquivo+"panda3.png",scale=escala, mirrored= True))
+        self.textures.append(arcade.load_texture(arquivo+'panda2.png',scale=escala))
 
         #pra bajxo ele usa o sprite padrão 
         self.textures.append(arcade.load_texture(arquivo+'panda1.png',scale=escala))

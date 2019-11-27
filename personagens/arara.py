@@ -69,22 +69,24 @@ class Arara(Player):
                 self.recarga_pulo = 0
 
     def load_images(self,arquivo,escala):
-
         #se for pra direita ele usa o sprite pro lado 
-        self.textures.append(arcade.load_texture(arquivo+"arara1.png",scale=escala))
+        self.textures.append(arcade.load_texture(arquivo+"arara4.png",scale=escala))
 
         #se for pra esquerda ele usa o sprite pro lado, porém espelhados
-        self.textures.append(arcade.load_texture(arquivo+"arara1.png",scale=escala, mirrored=True))
+        self.textures.append(arcade.load_texture(arquivo+"arara4.png",scale=escala, mirrored=True))
 
         #pra cima ele usa os sprite pra cima 
         self.textures.append(arcade.load_texture(arquivo+"arara3.png",scale=escala))
         self.textures.append(arcade.load_texture(arquivo+"arara3.png",scale=escala, mirrored= True))
+        self.textures.append(arcade.load_texture(arquivo+'arara2.png',scale=escala))
 
-        #pra bajxo ele usa o sprite padrão 
+        #pra baixo ele usa o sprite padrão 
         self.textures.append(arcade.load_texture(arquivo+'arara1.png',scale=escala))
         
-        self.texture_change_distance = 20
-
+        
+        
         self.set_texture(TEXTURE_BOTTOM)
+
+        self.texture_change_distance = 20
 
     
