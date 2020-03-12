@@ -14,10 +14,10 @@ criação de jogos pode exercer no aprendizado de programação.</p>
 <h3>Criadores:</h3> 
 
 <ul>
+  <li><b>Aluno: </b>Vítor Augusto Ueno Otto: <a href="mailto:vitoruenootto@gmail.com">vitoruenootto@gmail.com</a></li>
   <li><b>Aluno: </b>Alisson Reinaldo Flores: <a href="mailto:alisonreinaldof21@gmail.com">alisonreinaldof21@gmail.com</a></li>
   <li><b>Aluno: </b>Kauan Claudio Elias: <a href="mailto:kceliass@gmail.com">kceliass@gmail.com</a></li>
   <li><b>Aluna: </b>Manuela Helena Weidmann: <a  href="mailto:manuelahw12@gmail.com">manuelahw12@gmail.com</a></li>
-  <li><b>Aluno: </b>Vítor Augusto Ueno Otto: <a href="mailto:vitoruenootto@gmail.com">vitoruenootto@gmail.com</a></li>
   <li><b>Orientador: </b>Aldelir Fernando Luiz: <a href="mailto:aldelir.luiz@ifc.edu.br">aldelir.luiz@ifc.edu.br</a></li>
   <li><b>Orientador: </b>Ricardo de la Rocha Ladeira: <a href="mailto:ricardo.ladeira@ifc.edu.br">ricardo.ladeira@ifc.edu.br</a></li>
   <li><b>Coorientador: </b>Adriano Pessini: <a href="mailto:adriano.pessini@ifc.edu.br">adriano.pessini@ifc.edu.br</a></li>
