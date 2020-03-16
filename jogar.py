@@ -1,5 +1,5 @@
-from jogo import Jogo
-from var import *
+from app.jogo import Jogo
+from app.var import *
 
 
 def main():
