@@ -1,7 +1,7 @@
-<img src="img/textos/logo.png" width="300px">
+<img src="app/img/textos/logo.png" width="300px">
 <h2>Jogo criado com python e arcade para dois jogadores simultaneamente, baseado no clássico "Bomberman".</h2>
-<img src="img/prints/readme1.png">
-<img src="img/prints/readme2.png">
+<img src="app/img/prints/readme1.png">
+<img src="app/img/prints/readme2.png">
 
 <h3>O que é?</h3>
 
