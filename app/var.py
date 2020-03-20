@@ -1,5 +1,7 @@
 import arcade
 
+NOME_VENV = 'env'
+
 #Constantes do jogo
 SCREEN_WIDTH = HUD_WIDTH = 800
 SCREEN_HEIGHT = 600
