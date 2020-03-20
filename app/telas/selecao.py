@@ -63,7 +63,10 @@ class Selecao_personagem():
 
         #botoes
         self.botao_voltar.draw()
-        self.botao_confirmar.draw()
+        if self.personagem_p1 is not None and self.personagem_p2 is not None:
+            self.botao_confirmar.draw()
+        
+        
 
     def on_mouse_press(self,x,y,button,key_modifiers):
         self.botao_voltar.checar_clique(x,y,button,key_modifiers)

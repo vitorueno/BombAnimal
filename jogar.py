@@ -13,7 +13,8 @@ def configurar_env():
             
         elif platform.system() == 'Linux':
             os.system(f'python3 -m venv {NOME_VENV} && . {NOME_VENV}/bin/activate && pip install -r requirements.txt')
-            main()
+            main()        
+            
         else:
             print('\n\nPlataforma não suportada.')
             print('Crie e configure o ambiente virtual manualmente.\n\n')

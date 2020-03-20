@@ -15,11 +15,12 @@ class Ajuda():
         self.fundo = arcade.Sprite('app/img/fundos/fundo_menu.png',1,center_x=self.center_x,center_y=self.center_y)
 
         
-        botao_voltar_pagina = Botao_voltar_pag_ajuda(self.center_x - 230,self.center_y-10 - 210)
-        botao_voltar_menu = Botao_voltar_menu(89,20)
-        proxima_pag = Botao_proxima_pag_ajuda(self.center_x + 230, self.center_y-10 -210)
+        self.botao_voltar_pagina = Botao_voltar_pag_ajuda(self.center_x - 230,self.center_y-10 - 210)
+        self.botao_voltar_menu = Botao_voltar_menu(89,20)
+        self.proxima_pag = Botao_proxima_pag_ajuda(self.center_x + 230, self.center_y-10 -210)
         
-        self.lista_botoes = [botao_voltar_pagina,proxima_pag,botao_voltar_menu]
+        self.lista_botoes = [self.botao_voltar_pagina,self.botao_voltar_menu,self.proxima_pag]
+        
         
         self.titulo_sobre = 'O que é?'
         self.titulo_tutorial = 'Como faço pra jogar?'
@@ -43,8 +44,11 @@ class Ajuda():
         arcade.draw_rectangle_filled(self.center_x,self.center_y-10,self.screen_width - 150, self.screen_height - 140,(22,120,111,232))
         self.titulo.draw()  
 
-        for botao in self.lista_botoes:
-            botao.draw()
+        self.botao_voltar_menu.draw()
+        if self.pagina_atual > 1:
+            self.botao_voltar_pagina.draw()
+        if self.pagina_atual < 7:
+            self.proxima_pag.draw()
 
         #pagina 1
         if self.pagina_atual == 1:
@@ -89,8 +93,12 @@ class Ajuda():
             width=self.screen_width -150, anchor_x="center", anchor_y="center")
 
     def on_mouse_press(self,x,y,button,key_modifiers):
-        for botao in self.lista_botoes:
-            botao.checar_clique(x,y,button,key_modifiers)
+        self.botao_voltar_menu.checar_clique(x,y,button,key_modifiers)
+        if self.pagina_atual > 1:
+            self.botao_voltar_pagina.checar_clique(x,y,button,key_modifiers)
+        if self.pagina_atual < 7:
+            self.proxima_pag.checar_clique(x,y,button,key_modifiers)
+
 
     def on_mouse_release(self,x,y,button,key_modifiers):
         for botao in self.lista_botoes:
