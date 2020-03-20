@@ -3,7 +3,7 @@ from app.botoes import Botao_voltar_menu, Botao_confirmar, Botao_retornar_padrao
 from app.botoes import (Botao_baixo_p1, Botao_baixo_p2, Botao_bomba_p1,
      Botao_bomba_p2, Botao_cima_p1, Botao_cima_p2, Botao_direita_p1, Botao_direita_p2,
      Botao_esquerda_p1, Botao_esquerda_p2, )
-
+from app.var import dict_teclas
 
 CONFIRMAR_CONFIGURACAO = 10
 VOLTAR_PADRAO = 11
@@ -58,15 +58,15 @@ class Configuracoes():
                         width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
         
 
-        arcade.draw_text(str(self.config_atuais["cima_p1"]),300,430,arcade.color.WHITE,18,
+        arcade.draw_text(dict_teclas[self.config_atuais["cima_p1"]],300,430,arcade.color.WHITE,18,
                         width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
-        arcade.draw_text(str(self.config_atuais["direita_p1"]),300,360,arcade.color.WHITE,18,
+        arcade.draw_text(dict_teclas[self.config_atuais["direita_p1"]],300,360,arcade.color.WHITE,18,
                         width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
-        arcade.draw_text(str(self.config_atuais["baixo_p1"]),300,290,arcade.color.WHITE,18,
+        arcade.draw_text(dict_teclas[self.config_atuais["baixo_p1"]],300,290,arcade.color.WHITE,18,
                         width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
-        arcade.draw_text(str(self.config_atuais["esquerda_p1"]),300,220,arcade.color.WHITE,18,
+        arcade.draw_text(dict_teclas[self.config_atuais["esquerda_p1"]],300,220,arcade.color.WHITE,18,
                         width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
-        arcade.draw_text(str(self.config_atuais["bomba_p1"]),300,150,arcade.color.WHITE,18,
+        arcade.draw_text(dict_teclas[self.config_atuais["bomba_p1"]],300,150,arcade.color.WHITE,18,
                         width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
 
         arcade.draw_text("AÇÃO",625,490,(0,240,255,255),18,
@@ -75,15 +75,15 @@ class Configuracoes():
         arcade.draw_text("TECLA ATUAL",495,490,(0,240,255,255),18,
                         width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
 
-        arcade.draw_text(str(self.config_atuais["cima_p2"]),495,430,arcade.color.WHITE,18,
+        arcade.draw_text(dict_teclas[self.config_atuais["cima_p2"]],495,430,arcade.color.WHITE,18,
                         width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
-        arcade.draw_text(str(self.config_atuais["direita_p2"]),495,360,arcade.color.WHITE,18,
+        arcade.draw_text(dict_teclas[self.config_atuais["direita_p2"]],495,360,arcade.color.WHITE,18,
                         width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
-        arcade.draw_text(str(self.config_atuais["baixo_p2"]),495,290,arcade.color.WHITE,18,
+        arcade.draw_text(dict_teclas[self.config_atuais["baixo_p2"]],495,290,arcade.color.WHITE,18,
                         width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
-        arcade.draw_text(str(self.config_atuais["esquerda_p2"]),495,220,arcade.color.WHITE,18,
+        arcade.draw_text(dict_teclas[self.config_atuais["esquerda_p2"]],495,220,arcade.color.WHITE,18,
                         width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
-        arcade.draw_text(str(self.config_atuais["bomba_p2"]),495,150,arcade.color.WHITE,18,
+        arcade.draw_text(dict_teclas[self.config_atuais["bomba_p2"]],495,150,arcade.color.WHITE,18,
                         width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
 
         if self.alterar:
