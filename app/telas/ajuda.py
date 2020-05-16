@@ -3,6 +3,7 @@ from app.botoes.botao_voltar_menu import Botao_voltar_menu
 from app.botoes.botao_prox_pag_ajuda import Botao_proxima_pag_ajuda
 from app.botoes.botao_voltar_pag_ajuda import Botao_voltar_pag_ajuda
 
+
 class Ajuda():
     def __init__(self,screen_width,screen_height):
         self.screen_width = screen_width

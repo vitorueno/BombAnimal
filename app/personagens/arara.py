@@ -83,8 +83,6 @@ class Arara(Player):
         #pra baixo ele usa o sprite padrão 
         self.textures.append(arcade.load_texture(arquivo+'arara1.png',scale=escala))
         
-        
-        
         self.set_texture(TEXTURE_BOTTOM)
 
         self.texture_change_distance = 20

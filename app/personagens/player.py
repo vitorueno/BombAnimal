@@ -162,8 +162,6 @@ class Player(arcade.Sprite):
                 self.set_texture(TEXTURE_TOP_RIGHT)
             elif self.timer_andar >= 1.5:
                 self.set_texture(TEXTURE_TOP_STAND)
-        
-
     
         if self.change_y < 0:
             self.set_texture(TEXTURE_BOTTOM)

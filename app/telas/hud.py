@@ -1,5 +1,6 @@
 import arcade
 
+
 class Hud():
     def __init__(self,hud_width,hud_height,center_x,center_y,duracao_partida,p1,p2):
         self.hud_width = hud_width
@@ -27,7 +28,6 @@ class Hud():
         self.macaco_p2 = self.p2.macaco
         self.capacete_p2 = self.p2.capacete
         
-
     def atualizar_powerups(self,p1,p2):
         self.fogo_p1 = p1.fogo 
         self.vento_p1 = p1.vento
@@ -44,7 +44,6 @@ class Hud():
     def atualizar_tempo(self,delta_time):
         self.timer -= float(delta_time)
 
-    
     def draw(self):
         #retangulo
         arcade.draw_rectangle_filled(self.center_x,self.center_y,self.hud_width,

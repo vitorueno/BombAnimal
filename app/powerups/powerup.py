@@ -1,6 +1,7 @@
 import arcade
 from app.blocos.bloco import Bloco
 
+
 class Powerup(Bloco):
     def __init__(self,imagem,escala=0,center_x=0,center_y=0):
         super().__init__(imagem,escala,center_x,center_y)

@@ -49,7 +49,6 @@ class Pos_partida():
             player_empate1.draw()
             player_empate2.draw()
 
-
         #botoes
         for botao in self.lista_botoes:
             botao.draw()

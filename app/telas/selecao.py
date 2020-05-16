@@ -2,7 +2,6 @@ import arcade
 from app.botoes import Botao_voltar_menu, Botao_confirmar_selecao
 
 
-
 class Selecao_personagem():
     def __init__(self, screen_width,screen_height):
         self.screen_width = screen_width
@@ -66,8 +65,6 @@ class Selecao_personagem():
         if self.personagem_p1 is not None and self.personagem_p2 is not None:
             self.botao_confirmar.draw()
         
-        
-
     def on_mouse_press(self,x,y,button,key_modifiers):
         self.botao_voltar.checar_clique(x,y,button,key_modifiers)
         if self.personagem_p1 is not None and self.personagem_p2 is not None:
@@ -140,26 +137,4 @@ class Selecao_personagem():
             self.personagem_p2 = None
 
     def on_key_release(self, key, key_modifiers):
-        '''
-        if key == arcade.key.W:
-            pass
-        elif key == arcade.key.A:
-            pass
-        elif key == arcade.key.S:
-            pass
-        elif key == arcade.key.D:
-            pass
-        elif key == arcade.key.SPACE
-            pass
-        
-        if key == arcade.key.UP:
-            pass
-        elif key == arcade.key.LEFT:
-            pass
-        elif key == arcade.key.DOWN:
-            pass
-        elif key == arcade.key.RIGHT:
-            pass
-        elif key == arcade.key.ENTER
-            pass
-        '''
+        pass

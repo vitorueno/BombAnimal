@@ -8,6 +8,7 @@ from app.var import dict_teclas
 CONFIRMAR_CONFIGURACAO = 10
 VOLTAR_PADRAO = 11
 
+
 class Configuracoes():
     def __init__(self,screen_width,screen_height,config_atuais):
         self.screen_width = screen_width

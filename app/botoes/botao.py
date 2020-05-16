@@ -25,14 +25,6 @@ class Botao:
         return self.acao_botao
 
     def checar_clique(self,x,y,button,modifiers):
-        '''if x >= self.center_x and x <= self.width/2 and y >= self.center_y and y <= self.height/2 and button == arcade.MOUSE_BUTTON_LEFT:
-            self.on_press()
-        elif x <= self.center_x and x <= self.width/2 and y>= self.center_y and y <= self.height/2 and button == arcade.MOUSE_BUTTON_LEFT:
-            self.on_press()
-        elif x >= self.center_x and x <= self.width/2 and y <= self.center_y and y <= self.height/2 and button == arcade.MOUSE_BUTTON_LEFT:
-            self.on_press()
-        elif x  <= self.center_x and x <= self.width/2 and y <= self.center_y and y <= self.height/2 and button == arcade.MOUSE_BUTTON_LEFT:
-            self.on_press()'''
         if button == arcade.MOUSE_BUTTON_LEFT:
             if x > self.center_x + self.width / 2:
                 return None

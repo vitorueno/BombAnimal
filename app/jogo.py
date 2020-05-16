@@ -1,27 +1,5 @@
 from app import * 
  
-'''
-import arcade
-import random
-import time
-from personagens.arara import Arara 
-from personagens.lebre import Lebre
-from personagens.pinguim import Pinguim
-from personagens.panda import Panda
-from blocos.destrutivel import Destrutivel
-from blocos.indestrutivel import Indestrutivel
-from telas.hud import Hud
-from telas.mapa import Mapa
-from telas.menu import Menu
-from telas.selecao import Selecao_personagem
-from telas.pause import Tela_pause
-from telas.pos_partida import Pos_partida
-from telas.ajuda import Ajuda
-from telas.configuracoes import Configuracoes
-from bombas.explosao import Explosao_central
-from bombas.bomba import Bomba
-from var import *
-'''
 
 class Jogo(arcade.Window):
 
@@ -77,7 +55,6 @@ class Jogo(arcade.Window):
 
             self.morte_subita = False
             self.timer_morte_subita = DURACAO_PARTIDA
-
 
             #listas com sprites
             self.wall_list = arcade.SpriteList()
