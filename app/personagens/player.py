@@ -11,7 +11,8 @@ TEXTURE_TOP_STAND = 4
 TEXTURE_BOTTOM = 5
 
 class Player(arcade.Sprite):
-    def __init__(self,arquivo,scale=1,velocidade=3,x=0,y=0,bombas=1,forca=1,tipo_player=1,ganhou=None,limite_imortal=1.5):
+    def __init__(self, arquivo, scale=1, velocidade=3, x=0, y=0, bombas=1,
+                forca=1, tipo_player=1, ganhou=None, limite_imortal=1.5):
         super().__init__(scale=scale,center_x=x,center_y=y)
         self.arquivo = arquivo
         self.num_bombas = bombas
@@ -25,7 +26,7 @@ class Player(arcade.Sprite):
         self.esquerda = False
         self.direita = False
         self.plantado = False
-        self.som = arcade.sound.load_sound("app/sound/down.wav")
+        self.som = arcade.sound.load_sound('app/sound/down.wav')
         self.ganhou = ganhou
         self.vento = 0
         self.fogo = 0
@@ -205,3 +206,23 @@ class Player(arcade.Sprite):
             elif self.change_y < 0:
                 for colisao in colisoes:
                     self.bottom = max(colisao.top, self.bottom)
+                    
+    def load_images(self,animal):
+        arquivo = f'app/img/animais/{animal}/'
+        #se for pra direita ele usa o sprite pro lado 
+        self.textures.append(arcade.load_texture(arquivo+f'{animal}4.png',scale=self.scale))
+
+        #se for pra esquerda ele usa o sprite pro lado, porém espelhados
+        self.textures.append(arcade.load_texture(arquivo+f'{animal}4.png',scale=self.scale, mirrored=True))
+
+        #pra cima ele usa os sprite pra cima 
+        self.textures.append(arcade.load_texture(arquivo+f'{animal}3.png',scale=self.scale))
+        self.textures.append(arcade.load_texture(arquivo+f'{animal}3.png',scale=self.scale, mirrored= True))
+        self.textures.append(arcade.load_texture(arquivo+f'{animal}2.png',scale=self.scale))
+
+        #pra baixo ele usa o sprite padrão 
+        self.textures.append(arcade.load_texture(arquivo+f'{animal}1.png',scale=self.scale))
+        
+        self.set_texture(TEXTURE_BOTTOM)
+
+        self.texture_change_distance = 20

@@ -1,24 +1,18 @@
 import arcade
 from .player import Player
-
-#0.06
-TEXTURE_RIGHT = 0
-TEXTURE_LEFT = 1
-TEXTURE_TOP_LEFT = 2
-TEXTURE_TOP_RIGHT = 3
-TEXTURE_BOTTOM = 4
+from app.var import IMG_ARARA
 
 
 class Arara(Player):
-    def __init__(self,x=0,y=0, tipo_player = 1, 
-                arquivo="app/img/animais/arara/arara1.png",
-                scale=1.09,velocidade=3,bombas=1,forca=1):
-        super().__init__(arquivo=arquivo,scale=scale,velocidade=velocidade,x=x,y=y,bombas=bombas,forca=forca,tipo_player=tipo_player)
+    def __init__(self, x=0, y=0, tipo_player = 1, arquivo=IMG_ARARA, scale=1.09, 
+                 velocidade=3,bombas=1,forca=1):
+        super().__init__(arquivo=arquivo, scale=scale, velocidade=velocidade, x=x,
+                        y=y, bombas=bombas,forca=forca,tipo_player=tipo_player)
         self.tipo = "arara"
         #self.som = arcade.load_sound("sound/voo.mp3")
         self.recarga_pulo = 0
         self.pulou = False
-        self.load_images("app/img/animais/arara/",1.09)
+        self.load_images(self.tipo)
 
     def pular_parede(self,paredes,mapa,delta_time):
         TEMPO_RECARGA_PULO = 5
@@ -68,24 +62,3 @@ class Arara(Player):
             if self.recarga_pulo >= TEMPO_RECARGA_PULO:
                 self.pulou = False
                 self.recarga_pulo = 0
-
-    def load_images(self,arquivo,escala):
-        #se for pra direita ele usa o sprite pro lado 
-        self.textures.append(arcade.load_texture(arquivo+"arara4.png",scale=escala))
-
-        #se for pra esquerda ele usa o sprite pro lado, porém espelhados
-        self.textures.append(arcade.load_texture(arquivo+"arara4.png",scale=escala, mirrored=True))
-
-        #pra cima ele usa os sprite pra cima 
-        self.textures.append(arcade.load_texture(arquivo+"arara3.png",scale=escala))
-        self.textures.append(arcade.load_texture(arquivo+"arara3.png",scale=escala, mirrored= True))
-        self.textures.append(arcade.load_texture(arquivo+'arara2.png',scale=escala))
-
-        #pra baixo ele usa o sprite padrão 
-        self.textures.append(arcade.load_texture(arquivo+'arara1.png',scale=escala))
-        
-        self.set_texture(TEXTURE_BOTTOM)
-
-        self.texture_change_distance = 20
-
-    

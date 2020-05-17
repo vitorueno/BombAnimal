@@ -32,6 +32,12 @@ VOLTAR_PAG_AJUDA = 9
 CONFIRMAR_CONFIGURACAO = 10
 VOLTAR_PADRAO = 11
 
+#images
+IMG_ARARA = "app/img/animais/arara/arara1.png"
+IMG_PANDA = "app/img/animais/panda/panda1.png"
+IMG_PINGUIM = "app/img/animais/pinguim/pinguim1.png"
+IMG_LEBRE = "app/img/animais/lebre/lebre1.png"
+
 
 #Configuração de teclas
 CONFIG_PADRAO = {
