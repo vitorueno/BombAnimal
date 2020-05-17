@@ -17,6 +17,7 @@ EXPLOSION_TEXTURE_COUNT = 7
 FONT_LEMON = 'app/fonts/lemonmilk.otf'
 FONT_ARIAL = 'app/fonts/arial.ttf'
 FONT_PRESS = 'app/fonts/pressstart.ttf'
+FONT_UBUNTU = 'app/fonts/ubuntu.ttf'
 
 #Estados do Jogo
 MENU = 0
