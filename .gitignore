@@ -4,13 +4,4 @@ env/
 .env/
 venv/
 .venv/
-app/__pycache__/
-app/bloco/__pycache__/
-app/bombas/__pycache__/
-app/botoes/__pycache__/
-app/img/__pycache__/
-app/personagens/__pycache__/
-app/powerups/__pycache__/
-app/sound/__pycache__/
-app/telas/__pycache__/
 old/
