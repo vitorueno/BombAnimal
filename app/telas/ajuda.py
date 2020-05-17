@@ -6,10 +6,6 @@ from app.var import SCREEN_WIDTH, SCREEN_HEIGHT, CENTER_X, CENTER_Y
 
 class Ajuda():
     def __init__(self):
-        # SCREEN_WIDTH = screen_width
-        # SCREEN_HEIGHT = screen_height
-        # CENTER_X = screen_width/2
-        # CENTER_Y = screen_height/2
         self.pagina_atual = 1
 
         self.titulo = arcade.Sprite('app/img/textos/texto_ajuda.png',1,center_x=CENTER_X,center_y=CENTER_Y + 250)

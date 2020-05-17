@@ -20,7 +20,7 @@ class Jogo(arcade.Window):
         self.menu = Menu(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.tela_pause = Tela_pause(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.ajuda = Ajuda()
-        self.configuracoes = Configuracoes(SCREEN_WIDTH, SCREEN_HEIGHT, config_atual)
+        self.configuracoes = Configuracoes(config_atual)
         self.estado_atual = MENU
 
         #fisica

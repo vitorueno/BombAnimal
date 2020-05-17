@@ -3,20 +3,13 @@ from app.botoes import Botao_voltar_menu, Botao_confirmar, Botao_retornar_padrao
 from app.botoes import (Botao_baixo_p1, Botao_baixo_p2, Botao_bomba_p1,
      Botao_bomba_p2, Botao_cima_p1, Botao_cima_p2, Botao_direita_p1, Botao_direita_p2,
      Botao_esquerda_p1, Botao_esquerda_p2, )
-from app.var import dict_teclas
-
-CONFIRMAR_CONFIGURACAO = 10
-VOLTAR_PADRAO = 11
+from app.var import dict_teclas, SCREEN_WIDTH, SCREEN_HEIGHT, CENTER_X, CENTER_Y
 
 
 class Configuracoes():
-    def __init__(self,screen_width,screen_height,config_atuais):
-        self.screen_width = screen_width
-        self.screen_height = screen_height
-        self.center_x = screen_width/2
-        self.center_y = screen_height/2
-        self.titulo = arcade.Sprite("app/img/textos/texto_configuracoes.png",scale=1,center_x=self.center_x,center_y=self.center_y + 250)
-        self.fundo = arcade.Sprite('app/img/fundos/fundo_menu.png',1,center_x=self.center_x,center_y=self.center_y)
+    def __init__(self,config_atuais):
+        self.titulo = arcade.Sprite("app/img/textos/texto_configuracoes.png",scale=1,center_x=CENTER_X,center_y=CENTER_Y + 250)
+        self.fundo = arcade.Sprite('app/img/fundos/fundo_menu.png',1,center_x=CENTER_X,center_y=CENTER_Y)
 
         self.config_atuais = config_atuais
 
@@ -24,8 +17,8 @@ class Configuracoes():
         self.alterando = None
 
         botao_menu = Botao_voltar_menu(89,20)
-        botao_confirmar = Botao_confirmar(self.center_x + 250, self.center_y-10 -210) 
-        botao_padrao = Botao_retornar_padrao(self.center_x - 225,self.center_y-10 - 210)
+        botao_confirmar = Botao_confirmar(CENTER_X + 250, CENTER_Y-10 -210) 
+        botao_padrao = Botao_retornar_padrao(CENTER_X - 225,CENTER_Y-10 - 210)
 
         botao_cima_p1 = Botao_cima_p1(170,430) 
         botao_direita_p1 = Botao_direita_p1(170,360)
@@ -45,51 +38,51 @@ class Configuracoes():
 
     def draw(self):
         self.fundo.draw()
-        arcade.draw_rectangle_filled(self.center_x,self.center_y-10,self.screen_width - 150, self.screen_height - 140,(22,120,111,232))
-        arcade.draw_rectangle_filled(self.center_x,self.center_y-10,3, self.screen_height - 220,arcade.color.ARSENIC)
+        arcade.draw_rectangle_filled(CENTER_X,CENTER_Y-10,SCREEN_WIDTH - 150, SCREEN_HEIGHT - 140,(22,120,111,232))
+        arcade.draw_rectangle_filled(CENTER_X,CENTER_Y-10,3, SCREEN_HEIGHT - 220,arcade.color.ARSENIC)
         self.titulo.draw()
 
         for botao in self.lista_botoes:
             botao.draw()
 
         arcade.draw_text("AÇÃO",170,490,(0,240,255,255),18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
         
         arcade.draw_text("TECLA ATUAL",300,490,(0,240,255,255),18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
         
 
         arcade.draw_text(dict_teclas[self.config_atuais["cima_p1"]],300,430,arcade.color.WHITE,18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
         arcade.draw_text(dict_teclas[self.config_atuais["direita_p1"]],300,360,arcade.color.WHITE,18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
         arcade.draw_text(dict_teclas[self.config_atuais["baixo_p1"]],300,290,arcade.color.WHITE,18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
         arcade.draw_text(dict_teclas[self.config_atuais["esquerda_p1"]],300,220,arcade.color.WHITE,18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
         arcade.draw_text(dict_teclas[self.config_atuais["bomba_p1"]],300,150,arcade.color.WHITE,18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
 
         arcade.draw_text("AÇÃO",625,490,(0,240,255,255),18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
         
         arcade.draw_text("TECLA ATUAL",495,490,(0,240,255,255),18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
 
         arcade.draw_text(dict_teclas[self.config_atuais["cima_p2"]],495,430,arcade.color.WHITE,18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
         arcade.draw_text(dict_teclas[self.config_atuais["direita_p2"]],495,360,arcade.color.WHITE,18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
         arcade.draw_text(dict_teclas[self.config_atuais["baixo_p2"]],495,290,arcade.color.WHITE,18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
         arcade.draw_text(dict_teclas[self.config_atuais["esquerda_p2"]],495,220,arcade.color.WHITE,18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
         arcade.draw_text(dict_teclas[self.config_atuais["bomba_p2"]],495,150,arcade.color.WHITE,18,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
 
         if self.alterar:
-            arcade.draw_text("MODO ALTERAR ATIVADO",self.center_x + 25,74,arcade.color.RED,16,
-                        width=self.screen_width-300, align="center", anchor_x="center", anchor_y="center")
+            arcade.draw_text("MODO ALTERAR ATIVADO",CENTER_X + 25,74,arcade.color.RED,16,
+                        width=SCREEN_WIDTH-300, align="center", anchor_x="center", anchor_y="center")
 
     def on_mouse_press(self,x,y,button,key_modifiers):
         for botao in self.lista_botoes:
