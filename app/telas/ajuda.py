@@ -2,23 +2,23 @@ import arcade
 from app.botoes.botao_voltar_menu import Botao_voltar_menu
 from app.botoes.botao_prox_pag_ajuda import Botao_proxima_pag_ajuda
 from app.botoes.botao_voltar_pag_ajuda import Botao_voltar_pag_ajuda
-
+from app.var import SCREEN_WIDTH, SCREEN_HEIGHT, CENTER_X, CENTER_Y
 
 class Ajuda():
-    def __init__(self,screen_width,screen_height):
-        self.screen_width = screen_width
-        self.screen_height = screen_height
-        self.center_x = screen_width/2
-        self.center_y = screen_height/2
+    def __init__(self):
+        # SCREEN_WIDTH = screen_width
+        # SCREEN_HEIGHT = screen_height
+        # CENTER_X = screen_width/2
+        # CENTER_Y = screen_height/2
         self.pagina_atual = 1
 
-        self.titulo = arcade.Sprite('app/img/textos/texto_ajuda.png',1,center_x=self.center_x,center_y=self.center_y + 250)
-        self.fundo = arcade.Sprite('app/img/fundos/fundo_menu.png',1,center_x=self.center_x,center_y=self.center_y)
+        self.titulo = arcade.Sprite('app/img/textos/texto_ajuda.png',1,center_x=CENTER_X,center_y=CENTER_Y + 250)
+        self.fundo = arcade.Sprite('app/img/fundos/fundo_menu.png',1,center_x=CENTER_X,center_y=CENTER_Y)
 
         
-        self.botao_voltar_pagina = Botao_voltar_pag_ajuda(self.center_x - 230,self.center_y-10 - 210)
+        self.botao_voltar_pagina = Botao_voltar_pag_ajuda(CENTER_X - 230,CENTER_Y-10 - 210)
         self.botao_voltar_menu = Botao_voltar_menu(89,20)
-        self.proxima_pag = Botao_proxima_pag_ajuda(self.center_x + 230, self.center_y-10 -210)
+        self.proxima_pag = Botao_proxima_pag_ajuda(CENTER_X + 230, CENTER_Y-10 -210)
         
         self.lista_botoes = [self.botao_voltar_pagina,self.botao_voltar_menu,self.proxima_pag]
         
@@ -31,18 +31,18 @@ class Ajuda():
         self.titulo_contato = 'Contato'
         self.titulo_teclado = 'Controles Padrões'
 
-        self.texto_sobre = arcade.Sprite('app/img/textos/texto_sobre_ajuda.png',1,center_x=self.center_x,center_y=self.center_y)
-        self.texto_tutorial = arcade.Sprite('app/img/textos/texto_tutorial_ajuda.png',1,center_x=self.center_x,center_y=self.center_y)
-        self.texto_partida = arcade.Sprite('app/img/textos/texto_partida_ajuda.png',1,center_x=self.center_x,center_y=self.center_y)
-        self.texto_contato = arcade.Sprite('app/img/textos/texto_contato_ajuda.png',1,center_x=self.center_x,center_y=self.center_y)
+        self.texto_sobre = arcade.Sprite('app/img/textos/texto_sobre_ajuda.png',1,center_x=CENTER_X,center_y=CENTER_Y)
+        self.texto_tutorial = arcade.Sprite('app/img/textos/texto_tutorial_ajuda.png',1,center_x=CENTER_X,center_y=CENTER_Y)
+        self.texto_partida = arcade.Sprite('app/img/textos/texto_partida_ajuda.png',1,center_x=CENTER_X,center_y=CENTER_Y)
+        self.texto_contato = arcade.Sprite('app/img/textos/texto_contato_ajuda.png',1,center_x=CENTER_X,center_y=CENTER_Y)
 
-        self.tabela_itens = arcade.Sprite('app/img/ajuda/tabela_itens.png',0.75,center_x=self.center_x,center_y=self.center_y - 10)
-        self.tabela_personagens = arcade.Sprite('app/img/ajuda/tabela_personagens.png',0.9,center_x=self.center_x,center_y=self.center_y-10)
-        self.teclado = arcade.Sprite('app/img/ajuda/teclas.png',0.389,center_x=self.center_x,center_y=self.center_y - 10)
+        self.tabela_itens = arcade.Sprite('app/img/ajuda/tabela_itens.png',0.75,center_x=CENTER_X,center_y=CENTER_Y - 10)
+        self.tabela_personagens = arcade.Sprite('app/img/ajuda/tabela_personagens.png',0.9,center_x=CENTER_X,center_y=CENTER_Y-10)
+        self.teclado = arcade.Sprite('app/img/ajuda/teclas.png',0.389,center_x=CENTER_X,center_y=CENTER_Y - 10)
 
     def draw(self):
         self.fundo.draw()
-        arcade.draw_rectangle_filled(self.center_x,self.center_y-10,self.screen_width - 150, self.screen_height - 140,(22,120,111,232))
+        arcade.draw_rectangle_filled(CENTER_X,CENTER_Y-10,SCREEN_WIDTH - 150, SCREEN_HEIGHT - 140,(22,120,111,232))
         self.titulo.draw()  
 
         self.botao_voltar_menu.draw()
@@ -54,44 +54,44 @@ class Ajuda():
         #pagina 1
         if self.pagina_atual == 1:
             self.texto_sobre.draw()
-            arcade.draw_text(self.titulo_sobre,self.center_x, self.center_y-10 + 200,arcade.color.WHITE,24, align="center",
-            width=self.screen_width -150, anchor_x="center", anchor_y="center")
+            arcade.draw_text(self.titulo_sobre,CENTER_X, CENTER_Y-10 + 200,arcade.color.WHITE,24, align="center",
+            width=SCREEN_WIDTH -150, anchor_x="center", anchor_y="center")
         
         #pagina 2 
         elif self.pagina_atual == 2:
             self.texto_tutorial.draw()
-            arcade.draw_text(self.titulo_tutorial,self.center_x, self.center_y-10 + 200,arcade.color.WHITE,24, align="center",
-            width=self.screen_width -150, anchor_x="center", anchor_y="center")
+            arcade.draw_text(self.titulo_tutorial,CENTER_X, CENTER_Y-10 + 200,arcade.color.WHITE,24, align="center",
+            width=SCREEN_WIDTH -150, anchor_x="center", anchor_y="center")
         
         #pagina 3
         elif self.pagina_atual == 3:
             self.tabela_personagens.draw()
-            arcade.draw_text(self.titulo_personagens,self.center_x, self.center_y-10 + 200,arcade.color.WHITE,24, align="center",
-            width=self.screen_width - 150, anchor_x="center", anchor_y="center")
+            arcade.draw_text(self.titulo_personagens,CENTER_X, CENTER_Y-10 + 200,arcade.color.WHITE,24, align="center",
+            width=SCREEN_WIDTH - 150, anchor_x="center", anchor_y="center")
             
         #pagina 4
         elif self.pagina_atual == 4:
             self.texto_partida.draw()
-            arcade.draw_text(self.titulo_partida,self.center_x, self.center_y-10 + 200,arcade.color.WHITE,24, align="center",
-            width=self.screen_width -150, anchor_x="center", anchor_y="center")
+            arcade.draw_text(self.titulo_partida,CENTER_X, CENTER_Y-10 + 200,arcade.color.WHITE,24, align="center",
+            width=SCREEN_WIDTH -150, anchor_x="center", anchor_y="center")
 
         #pagina 5
         elif self.pagina_atual == 5:
             self.teclado.draw()
-            arcade.draw_text(self.titulo_teclado,self.center_x, self.center_y-10 + 200,arcade.color.WHITE,24, align="center",
-            width=self.screen_width -150, anchor_x="center", anchor_y="center")
+            arcade.draw_text(self.titulo_teclado,CENTER_X, CENTER_Y-10 + 200,arcade.color.WHITE,24, align="center",
+            width=SCREEN_WIDTH -150, anchor_x="center", anchor_y="center")
         
         #pagina 6
         elif self.pagina_atual == 6:
             self.tabela_itens.draw()
-            arcade.draw_text(self.titulo_itens,self.center_x, self.center_y-10 + 200,arcade.color.WHITE,24, align="center",
-            width=self.screen_width -150, anchor_x="center", anchor_y="center")
+            arcade.draw_text(self.titulo_itens,CENTER_X, CENTER_Y-10 + 200,arcade.color.WHITE,24, align="center",
+            width=SCREEN_WIDTH -150, anchor_x="center", anchor_y="center")
         
         #pagina 7
         elif self.pagina_atual == 7:
             self.texto_contato.draw()
-            arcade.draw_text(self.titulo_contato,self.center_x, self.center_y-10 + 200,arcade.color.WHITE,24, align="center",
-            width=self.screen_width -150, anchor_x="center", anchor_y="center")
+            arcade.draw_text(self.titulo_contato,CENTER_X, CENTER_Y-10 + 200,arcade.color.WHITE,24, align="center",
+            width=SCREEN_WIDTH -150, anchor_x="center", anchor_y="center")
 
     def on_mouse_press(self,x,y,button,key_modifiers):
         self.botao_voltar_menu.checar_clique(x,y,button,key_modifiers)
