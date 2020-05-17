@@ -69,36 +69,28 @@ class Jogo(arcade.Window):
 
             #personagens
             if self.tipo_p1 == "arara":
-                self.player1 = Arara(x=16,y=16,c=config_atual["cima_p1"],d=config_atual["direita_p1"],
-                b=config_atual["baixo_p1"],e=config_atual["esquerda_p1"],bomb=config_atual["bomba_p1"])
+                self.player1 = Arara(x=16,y=16)
 
             elif self.tipo_p1 == "lebre":
-                self.player1 = Lebre(x=16,y=16,c=config_atual["cima_p1"],d=config_atual["direita_p1"],
-                b=config_atual["baixo_p1"],e=config_atual["esquerda_p1"],bomb=config_atual["bomba_p1"])
+                self.player1 = Lebre(x=16,y=16)
 
             elif self.tipo_p1 == "pinguim":
-                self.player1 = Pinguim(x=16,y=16,c=config_atual["cima_p1"],d=config_atual["direita_p1"],
-                b=config_atual["baixo_p1"],e=config_atual["esquerda_p1"],bomb=config_atual["bomba_p1"])
+                self.player1 = Pinguim(x=16,y=16)
 
             elif self.tipo_p1 == "panda":
-                self.player1 = Panda(x=16,y=16,c=config_atual["cima_p1"],d=config_atual["direita_p1"],
-                b=config_atual["baixo_p1"],e=config_atual["esquerda_p1"],bomb=config_atual["bomba_p1"])
+                self.player1 = Panda(x=16,y=16)
 
             if self.tipo_p2 == "arara":
-                self.player2 = Arara(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,c=config_atual["cima_p2"],b=config_atual["baixo_p2"],
-                                    d=config_atual["direita_p2"],e=config_atual["esquerda_p2"],bomb=config_atual["bomba_p2"])
+                self.player2 = Arara(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,tipo_player=2)
 
             elif self.tipo_p2 == "lebre":
-                self.player2 = Lebre(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,c=config_atual["cima_p2"],b=config_atual["baixo_p2"],
-                                    d=config_atual["direita_p2"],e=config_atual["esquerda_p2"],bomb=config_atual["bomba_p2"])
+                self.player2 = Lebre(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,tipo_player=2)
 
             elif self.tipo_p2 == "pinguim":
-                self.player2 = Pinguim(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,c=config_atual["cima_p2"],b=config_atual["baixo_p2"],
-                                    d=config_atual["direita_p2"],e=config_atual["esquerda_p2"],bomb=config_atual["bomba_p2"])
+                self.player2 = Pinguim(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,tipo_player=2)
 
             elif self.tipo_p2 == "panda":
-                self.player2 = Panda(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,c=config_atual["cima_p2"],b=config_atual["baixo_p2"],
-                                    d=config_atual["direita_p2"],e=config_atual["esquerda_p2"],bomb=config_atual["bomba_p2"])
+                self.player2 = Panda(x=SCREEN_WIDTH-16,y=SCREEN_HEIGHT-16,tipo_player=2)
 
             self.player_list.append(self.player1)
             self.player_list.append(self.player2)
@@ -138,12 +130,6 @@ class Jogo(arcade.Window):
             self.texturas_totais_explosao = [self.textura_explosao_central,
                                             self.textura_explosao_trilho,
                                             self.textura_explosao_fim]
-
-
-            #definir engine de física que cuida das colisões
-            #self.physics_engine = arcade.PhysicsEngineSimple(self.player1,self.wall_list)
-            #self.physics_engine2 = arcade.PhysicsEngineSimple(self.player2,self.wall_list)
-
     
             
     def draw_game(self):

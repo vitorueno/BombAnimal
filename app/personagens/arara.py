@@ -10,9 +10,10 @@ TEXTURE_BOTTOM = 4
 
 
 class Arara(Player):
-    def __init__(self,x=0,y=0,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,
-                arquivo="app/img/animais/arara/arara1.png",scale=1.09,velocidade=3,bombas=1,forca=1):
-        super().__init__(arquivo=arquivo,scale=scale,velocidade=velocidade,x=x,y=y,bombas=bombas,forca=forca,c=c,b=b,d=d,e=e,bomb=bomb)
+    def __init__(self,x=0,y=0, tipo_player = 1, 
+                arquivo="app/img/animais/arara/arara1.png",
+                scale=1.09,velocidade=3,bombas=1,forca=1):
+        super().__init__(arquivo=arquivo,scale=scale,velocidade=velocidade,x=x,y=y,bombas=bombas,forca=forca,tipo_player=tipo_player)
         self.tipo = "arara"
         #self.som = arcade.load_sound("sound/voo.mp3")
         self.recarga_pulo = 0

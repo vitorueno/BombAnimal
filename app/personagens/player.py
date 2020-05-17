@@ -1,6 +1,7 @@
 import arcade
 from app.personagens import *
 from app.bombas.bomba import Bomba
+from app.var import config_atual
 
 TEXTURE_RIGHT = 0
 TEXTURE_LEFT = 1
@@ -10,7 +11,7 @@ TEXTURE_TOP_STAND = 4
 TEXTURE_BOTTOM = 5
 
 class Player(arcade.Sprite):
-    def __init__(self,arquivo,scale=1,velocidade=3,x=0,y=0,bombas=1,forca=1,c=arcade.key.W,b=arcade.key.S,d=arcade.key.D,e=arcade.key.A,bomb=arcade.key.SPACE,ganhou=None,limite_imortal=1.5):
+    def __init__(self,arquivo,scale=1,velocidade=3,x=0,y=0,bombas=1,forca=1,tipo_player=1,ganhou=None,limite_imortal=1.5):
         super().__init__(scale=scale,center_x=x,center_y=y)
         self.arquivo = arquivo
         self.num_bombas = bombas
@@ -23,11 +24,6 @@ class Player(arcade.Sprite):
         self.baixo = False
         self.esquerda = False
         self.direita = False
-        self.c = c
-        self.b = b
-        self.d = d
-        self.e = e
-        self.bomb = bomb
         self.plantado = False
         self.som = arcade.sound.load_sound("app/sound/down.wav")
         self.ganhou = ganhou
@@ -36,7 +32,23 @@ class Player(arcade.Sprite):
         self.macaco = False
         self.capacete = False
         self.timer_andar = 0.0
-
+        self.tipo_player = tipo_player
+        self.set_controles()
+        
+    def set_controles(self,config_atual=config_atual):
+        if self.tipo_player == 1:
+            self.c = config_atual['cima_p1']
+            self.b = config_atual['baixo_p1']
+            self.d = config_atual['direita_p1']
+            self.e = config_atual['esquerda_p1']
+            self.bomb = config_atual['bomba_p1']
+        elif self.tipo_player == 2:
+            self.c = config_atual['cima_p2']
+            self.b = config_atual['baixo_p2']
+            self.d = config_atual['direita_p2']
+            self.e = config_atual['esquerda_p2']
+            self.bomb = config_atual['bomba_p2']
+        
     def mover(self):
         self.change_x = 0
         self.change_y = 0
