@@ -1,12 +1,8 @@
 import arcade
-
+from app.var import HUD_WIDTH, HUD_HEIGHT, HUD_CENTER_X, HUD_CENTER_Y
 
 class Hud():
-    def __init__(self,hud_width,hud_height,center_x,center_y,duracao_partida,p1,p2):
-        self.hud_width = hud_width
-        self.hud_height = hud_height
-        self.center_x = center_x
-        self.center_y = center_y
+    def __init__(self,duracao_partida,p1,p2):
         self.timer = duracao_partida
 
         self.p1 = p1
@@ -46,34 +42,34 @@ class Hud():
 
     def draw(self):
         #retangulo
-        arcade.draw_rectangle_filled(self.center_x,self.center_y,self.hud_width,
-                                     self.hud_height,(22,120,111,232))
+        arcade.draw_rectangle_filled(HUD_CENTER_X,HUD_CENTER_Y,HUD_WIDTH,
+                                     HUD_HEIGHT,(22,120,111,232))
 
         #risco
-        arcade.draw_rectangle_filled(self.center_x,self.center_y-25,self.hud_width,
+        arcade.draw_rectangle_filled(HUD_CENTER_X,HUD_CENTER_Y-25,HUD_WIDTH,
                                      2,(0,0,0,170))
 
         #personagens
 
         #descobrir a miniatura do player 1
         if self.tipo_p1 == "arara":
-            miniatura_p1 = arcade.Sprite("app/img/animais/full_size/arara1.png",scale=0.04,center_x=self.center_x-370, center_y= self.center_y)
+            miniatura_p1 = arcade.Sprite("app/img/animais/full_size/arara1.png",scale=0.04,center_x=HUD_CENTER_X-370, center_y= HUD_CENTER_Y)
         elif self.tipo_p1 == "lebre":
-            miniatura_p1 = arcade.Sprite("app/img/animais/full_size/lebre1.png",scale=0.04,center_x=self.center_x-370, center_y= self.center_y)
+            miniatura_p1 = arcade.Sprite("app/img/animais/full_size/lebre1.png",scale=0.04,center_x=HUD_CENTER_X-370, center_y= HUD_CENTER_Y)
         elif self.tipo_p1 == "pinguim":
-            miniatura_p1 = arcade.Sprite("app/img/animais/full_size/pinguim1.png",scale=0.04,center_x=self.center_x-370, center_y= self.center_y)
+            miniatura_p1 = arcade.Sprite("app/img/animais/full_size/pinguim1.png",scale=0.04,center_x=HUD_CENTER_X-370, center_y= HUD_CENTER_Y)
         elif self.tipo_p1 == "panda":
-            miniatura_p1 = arcade.Sprite("app/img/animais/full_size/panda1.png",scale=0.04,center_x=self.center_x-370, center_y= self.center_y)
+            miniatura_p1 = arcade.Sprite("app/img/animais/full_size/panda1.png",scale=0.04,center_x=HUD_CENTER_X-370, center_y= HUD_CENTER_Y)
         
         #descobrir a miniatura player 2
         if self.tipo_p2 == "arara":
-            miniatura_p2 = arcade.Sprite("app/img/animais/full_size/arara1.png",scale=0.04,center_x=self.center_x+370, center_y= self.center_y)
+            miniatura_p2 = arcade.Sprite("app/img/animais/full_size/arara1.png",scale=0.04,center_x=HUD_CENTER_X+370, center_y= HUD_CENTER_Y)
         elif self.tipo_p2 == "lebre":
-            miniatura_p2 = arcade.Sprite("app/img/animais/full_size/lebre1.png",scale=0.04,center_x=self.center_x+370, center_y= self.center_y)
+            miniatura_p2 = arcade.Sprite("app/img/animais/full_size/lebre1.png",scale=0.04,center_x=HUD_CENTER_X+370, center_y= HUD_CENTER_Y)
         elif self.tipo_p2 == "pinguim":
-            miniatura_p2 = arcade.Sprite("app/img/animais/full_size/pinguim1.png",scale=0.04,center_x=self.center_x+370, center_y= self.center_y)
+            miniatura_p2 = arcade.Sprite("app/img/animais/full_size/pinguim1.png",scale=0.04,center_x=HUD_CENTER_X+370, center_y= HUD_CENTER_Y)
         elif self.tipo_p2 == "panda":
-            miniatura_p2 = arcade.Sprite("app/img/animais/full_size/panda1.png",scale=0.04,center_x=self.center_x+370, center_y= self.center_y)
+            miniatura_p2 = arcade.Sprite("app/img/animais/full_size/panda1.png",scale=0.04,center_x=HUD_CENTER_X+370, center_y= HUD_CENTER_Y)
 
         #desenhar miniaturas
         miniatura_p1.draw()
@@ -82,24 +78,24 @@ class Hud():
         #texto players
         jogador1 = f"Jogador 1"
         jogador2 = f"Jogador 2"
-        arcade.draw_text(jogador1,self.center_x-300,self.center_y+7,arcade.color.WHITE,13,width=self.hud_width, align="center", anchor_x="center", anchor_y="bottom")
-        arcade.draw_text(jogador2,self.center_x+300,self.center_y+7,arcade.color.WHITE,13,width=self.hud_width, align="center", anchor_x="center", anchor_y="bottom")
+        arcade.draw_text(jogador1,HUD_CENTER_X-300,HUD_CENTER_Y+7,arcade.color.WHITE,13,width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="bottom")
+        arcade.draw_text(jogador2,HUD_CENTER_X+300,HUD_CENTER_Y+7,arcade.color.WHITE,13,width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="bottom")
         
         #powerups 
 
         #criar miniaturas dos powerups do jogador 1
-        mini_fogo_p1 = arcade.Sprite("app/img/powerups/fogo3.png",scale=0.5,center_x=self.center_x-325,center_y=self.center_y-3)
-        mini_vento_p1 = arcade.Sprite("app/img/powerups/vento3.png",scale=0.5,center_x=self.center_x-307,center_y=self.center_y-3)
-        mini_bombas_p1 = arcade.Sprite("app/img/powerups/bombaExtra3.png",scale=0.5,center_x=self.center_x-287,center_y=self.center_y-3)
-        mini_macaco_p1 = arcade.Sprite("app/img/powerups/macaco3.png",scale=0.5,center_x=self.center_x-267,center_y=self.center_y-3)
-        mini_capacete_p1 = arcade.Sprite("app/img/powerups/capacete3.png",scale=0.5,center_x=self.center_x-247,center_y=self.center_y-3)
+        mini_fogo_p1 = arcade.Sprite("app/img/powerups/fogo3.png",scale=0.5,center_x=HUD_CENTER_X-325,center_y=HUD_CENTER_Y-3)
+        mini_vento_p1 = arcade.Sprite("app/img/powerups/vento3.png",scale=0.5,center_x=HUD_CENTER_X-307,center_y=HUD_CENTER_Y-3)
+        mini_bombas_p1 = arcade.Sprite("app/img/powerups/bombaExtra3.png",scale=0.5,center_x=HUD_CENTER_X-287,center_y=HUD_CENTER_Y-3)
+        mini_macaco_p1 = arcade.Sprite("app/img/powerups/macaco3.png",scale=0.5,center_x=HUD_CENTER_X-267,center_y=HUD_CENTER_Y-3)
+        mini_capacete_p1 = arcade.Sprite("app/img/powerups/capacete3.png",scale=0.5,center_x=HUD_CENTER_X-247,center_y=HUD_CENTER_Y-3)
 
         #criar miniaturas dos powerups do jogador 2
-        mini_fogo_p2 = arcade.Sprite("app/img/powerups/fogo3.png",scale=0.5,center_x=self.center_x+325,center_y=self.center_y-3)
-        mini_vento_p2 = arcade.Sprite("app/img/powerups/vento3.png",scale=0.5,center_x=self.center_x+307,center_y=self.center_y-3)
-        mini_bombas_p2 = arcade.Sprite("app/img/powerups/bombaExtra3.png",scale=0.5,center_x=self.center_x+287,center_y=self.center_y-3)
-        mini_macaco_p2 = arcade.Sprite("app/img/powerups/macaco3.png",scale=0.5,center_x=self.center_x+267,center_y=self.center_y-3)
-        mini_capacete_p2 = arcade.Sprite("app/img/powerups/capacete3.png",scale=0.5,center_x=self.center_x+247,center_y=self.center_y-3)
+        mini_fogo_p2 = arcade.Sprite("app/img/powerups/fogo3.png",scale=0.5,center_x=HUD_CENTER_X+325,center_y=HUD_CENTER_Y-3)
+        mini_vento_p2 = arcade.Sprite("app/img/powerups/vento3.png",scale=0.5,center_x=HUD_CENTER_X+307,center_y=HUD_CENTER_Y-3)
+        mini_bombas_p2 = arcade.Sprite("app/img/powerups/bombaExtra3.png",scale=0.5,center_x=HUD_CENTER_X+287,center_y=HUD_CENTER_Y-3)
+        mini_macaco_p2 = arcade.Sprite("app/img/powerups/macaco3.png",scale=0.5,center_x=HUD_CENTER_X+267,center_y=HUD_CENTER_Y-3)
+        mini_capacete_p2 = arcade.Sprite("app/img/powerups/capacete3.png",scale=0.5,center_x=HUD_CENTER_X+247,center_y=HUD_CENTER_Y-3)
 
         #mostrar miniaturas do jogador 1
         mini_fogo_p1.draw()
@@ -124,32 +120,32 @@ class Hud():
             mini_capacete_p2.draw()
 
         #contador powerups do jogador 1
-        arcade.draw_text(str(self.fogo_p1),self.center_x-325, self.center_y-17,arcade.color.WHITE,12,
-                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
-        arcade.draw_text(str(self.vento_p1),self.center_x-307, self.center_y-17,arcade.color.WHITE,12,
-                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
-        arcade.draw_text(str(self.bombas_p1),self.center_x-287, self.center_y-17,arcade.color.WHITE,12,
-                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
+        arcade.draw_text(str(self.fogo_p1),HUD_CENTER_X-325, HUD_CENTER_Y-17,arcade.color.WHITE,12,
+                        width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="center")
+        arcade.draw_text(str(self.vento_p1),HUD_CENTER_X-307, HUD_CENTER_Y-17,arcade.color.WHITE,12,
+                        width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="center")
+        arcade.draw_text(str(self.bombas_p1),HUD_CENTER_X-287, HUD_CENTER_Y-17,arcade.color.WHITE,12,
+                        width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="center")
         if self.p1.capacete:
-            arcade.draw_text("∞",self.center_x-247, self.center_y-17,arcade.color.WHITE,12,
-                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
+            arcade.draw_text("∞",HUD_CENTER_X-247, HUD_CENTER_Y-17,arcade.color.WHITE,12,
+                        width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="center")
         if self.p1.macaco:
-            arcade.draw_text("∞",self.center_x-267, self.center_y-17,arcade.color.WHITE,12,
-                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
+            arcade.draw_text("∞",HUD_CENTER_X-267, HUD_CENTER_Y-17,arcade.color.WHITE,12,
+                        width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="center")
 
         #contador powerups do jogador 2
-        arcade.draw_text(str(self.fogo_p2),self.center_x+325, self.center_y-17,arcade.color.WHITE,12,
-                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
-        arcade.draw_text(str(self.vento_p2),self.center_x+307, self.center_y-17,arcade.color.WHITE,12,
-                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
-        arcade.draw_text(str(self.bombas_p2),self.center_x+287, self.center_y-17,arcade.color.WHITE,12,
-                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
+        arcade.draw_text(str(self.fogo_p2),HUD_CENTER_X+325, HUD_CENTER_Y-17,arcade.color.WHITE,12,
+                        width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="center")
+        arcade.draw_text(str(self.vento_p2),HUD_CENTER_X+307, HUD_CENTER_Y-17,arcade.color.WHITE,12,
+                        width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="center")
+        arcade.draw_text(str(self.bombas_p2),HUD_CENTER_X+287, HUD_CENTER_Y-17,arcade.color.WHITE,12,
+                        width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="center")
         if self.p2.capacete:
-            arcade.draw_text("∞",self.center_x+247, self.center_y-17,arcade.color.WHITE,12,
-                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
+            arcade.draw_text("∞",HUD_CENTER_X+247, HUD_CENTER_Y-17,arcade.color.WHITE,12,
+                        width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="center")
         if self.p2.macaco:
-            arcade.draw_text("∞",self.center_x+267, self.center_y-17,arcade.color.WHITE,12,
-                        width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
+            arcade.draw_text("∞",HUD_CENTER_X+267, HUD_CENTER_Y-17,arcade.color.WHITE,12,
+                        width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="center")
 
         #timer                            
         minutos = int(self.timer) // 60
@@ -157,10 +153,10 @@ class Hud():
         tempo_texto = f"Tempo: {minutos:02d}:{segundos:02d}"
         morte_subita_texto = f"MORTE SÚBITA"
         if self.timer > 0:
-            arcade.draw_text(tempo_texto,self.center_x,self.center_y,arcade.color.WHITE,14,
-                            width=self.hud_width, align="center", anchor_x="center", anchor_y="center")
+            arcade.draw_text(tempo_texto,HUD_CENTER_X,HUD_CENTER_Y,arcade.color.WHITE,14,
+                            width=HUD_WIDTH, align="center", anchor_x="center", anchor_y="center")
         elif self.timer <= 0:
-            arcade.draw_text(morte_subita_texto,self.center_x,self.center_y,arcade.color.RED,14,
-                            width=self.hud_width,align="center", anchor_x="center", anchor_y="center")
+            arcade.draw_text(morte_subita_texto,HUD_CENTER_X,HUD_CENTER_Y,arcade.color.RED,14,
+                            width=HUD_WIDTH,align="center", anchor_x="center", anchor_y="center")
 
 

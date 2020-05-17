@@ -1,32 +1,26 @@
 import arcade
 from app.botoes import Botao_jogar, Botao_opcoes, Botao_sair, Botao_ajuda
-
+from app.var import SCREEN_WIDTH, SCREEN_HEIGHT, CENTER_X, CENTER_Y
 
 class Menu():
-    def __init__(self,screen_width,screen_height):
-        self.screen_width = screen_width
-        self.screen_height = screen_height
-        self.center_x = screen_width/2
-        self.center_y = screen_height/2
-
+    def __init__(self):
         #criar botoes e jogar numa lista de botoes
-        
-        botao_jogar = Botao_jogar(self.center_x, self.center_y + 60)
-        botao_opcoes = Botao_opcoes(self.center_x, self.center_y - 10)
-        botao_ajuda = Botao_ajuda(self.center_x,self.center_y - 80)
-        botao_sair = Botao_sair(self.center_x,self.center_y- 150)
+        botao_jogar = Botao_jogar(CENTER_X, CENTER_Y + 60)
+        botao_opcoes = Botao_opcoes(CENTER_X, CENTER_Y - 10)
+        botao_ajuda = Botao_ajuda(CENTER_X,CENTER_Y - 80)
+        botao_sair = Botao_sair(CENTER_X,CENTER_Y- 150)
         self.lista_botoes = [botao_jogar,botao_opcoes,botao_ajuda,botao_sair]
         
     def draw(self):
         #fundo
-        fundo = arcade.Sprite("app/img/fundos/fundo_menu.png",center_x=self.center_x,center_y=self.center_y,scale=1)
+        fundo = arcade.Sprite("app/img/fundos/fundo_menu.png",center_x=CENTER_X,center_y=CENTER_Y,scale=1)
         fundo.draw()
 
         #retangulo
-        arcade.draw_rectangle_filled(self.center_x,self.center_y,self.screen_width - 300, self.screen_height - 200,(22,120,111,232))
+        arcade.draw_rectangle_filled(CENTER_X,CENTER_Y,SCREEN_WIDTH - 300, SCREEN_HEIGHT - 200,(22,120,111,232))
 
         #logo
-        logo = arcade.Sprite("app/img/textos/logo.png",center_x=self.center_x,center_y=self.center_y + 150,scale=1)
+        logo = arcade.Sprite("app/img/textos/logo.png",center_x=CENTER_X,center_y=CENTER_Y + 150,scale=1)
         logo.draw()
 
         #botoes

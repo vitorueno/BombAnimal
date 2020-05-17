@@ -16,9 +16,9 @@ class Jogo(arcade.Window):
         self.pos_partida = None
         
         #carregar antes porque são importantes
-        self.selecao_personagem = Selecao_personagem(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.menu = Menu(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.tela_pause = Tela_pause(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.selecao_personagem = Selecao_personagem()
+        self.menu = Menu()
+        self.tela_pause = Tela_pause()
         self.ajuda = Ajuda()
         self.configuracoes = Configuracoes(config_atual)
         self.estado_atual = MENU
@@ -104,9 +104,9 @@ class Jogo(arcade.Window):
             self.player_list.append(self.player2)
 
             #interface
-            self.hud = Hud(HUD_WIDTH,HUD_HEIGHT,HUD_CENTER_X,HUD_CENTER_Y,DURACAO_PARTIDA,self.player1,self.player2)
-            self.mapa = Mapa(SCREEN_WIDTH,SCREEN_HEIGHT-HUD_HEIGHT,32,32)
-            self.pos_partida = Pos_partida(SCREEN_WIDTH,SCREEN_HEIGHT,self.player1,self.player2)
+            self.hud = Hud(DURACAO_PARTIDA,self.player1,self.player2)
+            self.mapa = Mapa()
+            self.pos_partida = Pos_partida(self.player1,self.player2)
             
 
             self.background_list = self.mapa.get_background()

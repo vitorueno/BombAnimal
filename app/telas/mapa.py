@@ -1,27 +1,19 @@
 import arcade
 import random
 from app.blocos import Grama, Arvore_verde, Arvore_dourada, Arvore_rosa, Arvore_vermelha, Parede
-
+from app.var import SCREEN_WIDTH, MAP_HEIGHT, BLOCK_SIZE
 
 class Mapa():
-    def __init__(self,map_width,map_height,img_width,img_height):
-        self.__map_height = map_height
-        self.__map_width = map_width
+    def __init__(self):
         self.__background_list = arcade.SpriteList()
         self.__indestrutiveis = arcade.SpriteList()
         self.__destrutiveis = arcade.SpriteList()
         self.__parede = arcade.SpriteList()
-        self.__img_width = img_width
-        self.__img_height = img_height
-
-        #width 25
-        #height 18
+    
         #a primeira lista é só pra não ficar uma faixa vazia perto da hud
         #observação: as listas estão invertidas em relação a forma como aparecem no jogo
-
-        #P = parede
-        #g = grama
-        #a = arvore
+        #P = parede, g = grama, a = arvore
+        
         self.__map_matriz = [
             ["g","g","g","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","g","g","g"],
             ["g","p","p","a","p","a","p","a","p","a","p","a","p","a","p","a","p","a","p","a","p","a","p","p","g"],
@@ -43,24 +35,18 @@ class Mapa():
             ["g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g","g"]
         ]
 
-        grama_mapa = Grama(map_width/2,map_height/2)
+        grama_mapa = Grama(SCREEN_WIDTH/2, MAP_HEIGHT/2)
         self.__background_list.append(grama_mapa)
 
-        y1 = self.__img_height / 2
+        y1 = BLOCK_SIZE / 2
         for matriz in self.__map_matriz:
-            x1 = self.__img_width / 2
+            x1 = BLOCK_SIZE / 2
 
             for elemento in matriz:
 
-                #cria grama sozinha
-                #if elemento == "g":
-                    #objeto = Grama(x1,y1)
-                    #self.__background_list.append(objeto)
                 #cria arvores com grama de fundo
                 if elemento == "a":
                     tipo = random.randint(1,100)
-                    #objeto2 = Grama(x1,y1)
-                    #self.__background_list.append(objeto2)
                 
                     if tipo > 0 and tipo <= 75:
                         objeto = Arvore_verde(x1,y1)
@@ -82,18 +68,14 @@ class Mapa():
                         self.__destrutiveis.append(objeto)
                         self.__parede.append(objeto)
                     
-
                 #cria paredes com grama de fundo
                 if elemento == "p":
                     objeto = Parede(x1,y1)
                     self.__indestrutiveis.append(objeto)
                     self.__parede.append(objeto)
-                    #objeto2 = Grama(x1,y1)
-                    #self.__background_list.append(objeto2)
                     
-                    
-                x1 += self.__img_width
-            y1 += self.__img_height 
+                x1 += BLOCK_SIZE
+            y1 += BLOCK_SIZE 
 
     def get_background(self):
         return self.__background_list
@@ -108,8 +90,8 @@ class Mapa():
         return self.__parede
     
     def get_bloco_da_coord(self,x,y):
-        pos_x = ((x // 32) * 32) + 16 
-        pos_y = ((y // 32) * 32) + 16
+        pos_x = ((x // BLOCK_SIZE) * BLOCK_SIZE) + BLOCK_SIZE/2 
+        pos_y = ((y // BLOCK_SIZE) * BLOCK_SIZE) + BLOCK_SIZE/2
         paredes = self.get_paredes()
         for parede in paredes:
             if parede.center_x == pos_x and parede.center_y == pos_y:
