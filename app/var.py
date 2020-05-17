@@ -14,8 +14,9 @@ LIMITE_BOMBAS_MORTE_SUBITA = 5
 MOVEMENT_SPEED = 5
 NUM_DESTRUTIVOS = 10
 EXPLOSION_TEXTURE_COUNT = 7
-FONT_BUTTON = 'app/fonts/lemonmilk.otf'
+FONT_LEMON = 'app/fonts/lemonmilk.otf'
 FONT_ARIAL = 'app/fonts/arial.ttf'
+FONT_PRESS = 'app/fonts/pressstart.ttf'
 
 #Estados do Jogo
 MENU = 0
