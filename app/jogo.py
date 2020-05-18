@@ -354,7 +354,7 @@ class Jogo(arcade.Window):
  
     def on_key_press(self, key, key_modifiers):
         if self.estado_atual == SELECAO_PERSONAGEM:
-            self.selecao_personagem.on_key_press_p1(key,key_modifiers)
+            self.selecao_personagem.on_key_press(key,key_modifiers)
         
         if self.estado_atual == PARTIDA:
             if not self.pausado:
@@ -367,10 +367,6 @@ class Jogo(arcade.Window):
     #fim do on_key_press
                 
     def on_key_release(self, key, key_modifiers):
-        if self.estado_atual == MENU:
-            pass
-        if self.estado_atual == SELECAO_PERSONAGEM:
-            pass
         if self.estado_atual == PARTIDA:
             if not self.pausado:
                 for player in self.player_list:
@@ -381,10 +377,6 @@ class Jogo(arcade.Window):
                 if key == arcade.key.ESCAPE:
                     self.pausado = False
 
-        if self.estado_atual == PAUSE:
-            pass
-        if self.estado_atual == POS_PARTIDA:
-            pass
         if self.estado_atual == OPCOES:
             self.configuracoes.on_key_release(key,key_modifiers)
 

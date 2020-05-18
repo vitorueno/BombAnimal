@@ -37,7 +37,10 @@ IMG_ARARA = "app/img/animais/arara/arara1.png"
 IMG_PANDA = "app/img/animais/panda/panda1.png"
 IMG_PINGUIM = "app/img/animais/pinguim/pinguim1.png"
 IMG_LEBRE = "app/img/animais/lebre/lebre1.png"
-
+ARARA_FULLSIZE = "app/img/animais/full_size/arara1.png"
+LEBRE_FULLSIZE = "app/img/animais/full_size/lebre1.png"
+PINGUIM_FULLSIZE = "app/img/animais/full_size/pinguim1.png"
+PANDA_FULLSIZE = "app/img/animais/full_size/panda1.png"
 
 #Configuração de teclas
 CONFIG_PADRAO = {
